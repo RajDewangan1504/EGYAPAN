@@ -1,16 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
-import CustomTypo from './components/common/CustomTypo';
 import './global.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+
+import MainRoutes from './routes/MainRoutes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <CustomTypo variant="h2">Hello hi</CustomTypo>
-      </header>
+    <div className="app">
+      <MainRoutes />
     </div>
   );
 }
 
 export default App;
+library.add(fab, fas, far)

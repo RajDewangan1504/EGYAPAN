@@ -1,0 +1,19 @@
+.main{
+    display: flex;
+    flex : 1;
+    align-items: center;
+    background-color: azure;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: #fff;
+    gap : 0.8rem;
+    border : 1px solid rgba(141, 140, 140, 0.6);
+}

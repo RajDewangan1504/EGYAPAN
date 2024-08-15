@@ -1,12 +1,12 @@
 import React from 'react'
 import {Typography} from '@mui/material'
+import { bgColor } from '../../Utils'
 
 export default function CustomTypo({
     component,
     to,
     variant,
     sx,
-    color,
     children,
     href,
     target,
@@ -20,7 +20,6 @@ export default function CustomTypo({
             component={component}
             to={to}
             variant={variant}
-            color={color}
             href = {href}
             taregt = {target}
             underline = {underline}
