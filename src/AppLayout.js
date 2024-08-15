@@ -6,7 +6,7 @@ export function AppLayout({ children }) {
     const showSidebar = location.pathname !== '/login'; // Don't show sidebar on login page
 
     return (
-        <div>
+        <div className="d-flex">
             {showSidebar && <Sidebar />}
             {children}
         </div>
