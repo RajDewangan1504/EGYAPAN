@@ -8,9 +8,11 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 
 import MainRoutes from './routes/MainRoutes';
 
+
+
 function App() {
   return (
-    <div className="app">
+    <div className="min-height-100vh">
       <MainRoutes />
     </div>
   );
