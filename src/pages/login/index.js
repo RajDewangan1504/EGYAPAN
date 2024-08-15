@@ -28,7 +28,7 @@ export default function Login() {
   };
 
   return (
-    <div className={`${styles.main} flex-1`}>
+    <div className={`${styles.main} flex-1 min-height-100vh`}>
       <div className={styles.box}>
         <CustomTypo
           variant={"h5"}>Login</CustomTypo>
