@@ -1,15 +1,22 @@
-import logo from './logo.svg';
+
 import './App.css';
-import CustomTypo from './components/common/CustomTypo';
+
 import './global.css'
+import SideBar from './components/sideBar/Sidebar'
+import AppRoutes from './routes/Routes';
+import "./global.css"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <CustomTypo variant="h2">Hello hi</CustomTypo>
-      </header>
-    </div>
+    <Router>
+      <div className='d-flex'>
+        <SideBar />
+        <div className='flex-grow p-2'>
+          <AppRoutes />
+        </div>
+      </div>
+    </Router>
   );
 }
 
