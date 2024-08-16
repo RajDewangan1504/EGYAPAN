@@ -276,7 +276,9 @@ body {
 .position-relative {
   position: relative;
 }
-
+.position-absolute{
+  position: absolute;
+}
 
 .width-100 {
   width: 100%;
@@ -318,9 +320,15 @@ body {
 .mr-1{
   margin-right: 1rem;
 }
+.mr-2{
+  margin-right: 2rem;
+}
 
 .p-1-half {
   padding: 1.5rem;
+}
+.p-1{
+  padding: 1rem;
 }
 
 .pb-1 {
