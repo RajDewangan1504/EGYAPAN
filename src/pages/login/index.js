@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './styles.module.css'
 import CustomInput from '../../components/common/CustomInput'
 import CustomTypo from '../../components/common/CustomTypo/CustomTypo'
-import {  IconButton, InputAdornment } from '@mui/material'
+import { IconButton, InputAdornment } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CustomButton from '../../components/common/CustomButton'
 import CustomLogo from '../../components/common/CustomLogo'
@@ -30,15 +30,18 @@ export default function Login() {
   return (
     <div className={`${styles.main} flex-1 min-height-100vh`}>
       <div className={styles.box}>
-        <CustomTypo
-          variant={"h5"}>Login</CustomTypo>
 
-        <CustomLogo/>  
+        <div className='d-flex flex-column align-items-center gap-1' >
+          <CustomTypo
+            variant={"h3"} fontSize={"25px"}>Login to</CustomTypo>
 
+          <CustomLogo />
+        </div>
 
         <CustomInput
           name={"email"}
-          fullWidth = {true}
+          fullWidth={true}
+          placeholder={"Enter Email"}
           onChange={handleOnChange}
           label={"Email"} />
 
@@ -48,6 +51,7 @@ export default function Login() {
           type={!showPassword ? "text" : "password"}
           onChange={handleOnChange}
           fullWidth
+          placeholder={"Enter Password"}
           label={"Password"}
           endIcon={<InputAdornment position="end">
             <IconButton
@@ -57,18 +61,25 @@ export default function Login() {
               edge="end"
               size="large"
             >
-              {showPassword ? <FontAwesomeIcon icon="fa-regular fa-eye" fontSize={"1rem"} /> : <FontAwesomeIcon icon="fa-regular fa-eye-slash" fontSize={"1rem"}/>}
+              {showPassword ? <FontAwesomeIcon icon="fa-regular fa-eye" fontSize={"1rem"} /> : <FontAwesomeIcon icon="fa-regular fa-eye-slash" fontSize={"1rem"} />}
             </IconButton>
           </InputAdornment>}
         />
 
-        <CustomButton 
+        <CustomButton
           text={"Login"}
-          onClick={null}  
-          fullWidth={true} 
-          variant=  "contained"  
+          onClick={null}
+          fullWidth={true}
+          variant="contained"
         />
       </div>
+
+      <div className={styles.footerText}>
+       
+          <CustomTypo variant="body2" fontSize={"12px"}>Designed by <u>BitCrackers.com</u><sup>©</sup></CustomTypo>
+       
+      </div>
+
     </div>
   )
 }

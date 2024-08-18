@@ -1,0 +1,62 @@
+.main{
+    /* background-color: red; */
+    /* min-width: 750px; */
+    width: 100%;
+    /* overflow-x: scroll; */
+    /*  background-color: red; */
+}
+
+.pagination{
+    display: flex;
+    justify-content: flex-end;
+    margin : 1rem 2rem;
+}
+
+.searchBarContainer{
+    padding : 1.5rem 1rem;
+    border-bottom: 1px solid rgb(240,240,240);
+}
+
+.tableMainHeadingContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.actionBtnContainer{
+    display: flex;
+    gap : 0.5rem;
+}
+
+.cellText{
+    display: -webkit-box; 
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+}
+
+.cellDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+}
+
+.tableBox{
+    /* width: 800px; */
+    /* min-width: 800px; */
+    overflow-x: scroll;
+}
+
+.headCell{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    padding : 0.5rem;
+    align-self: center !important;   
+    text-align: center !important;
+}

@@ -9,6 +9,8 @@ export default function CustomTypo({
     sx,
     children,
     href,
+    fontSize,
+    fontWeight,
     target,
     underline,
     gutterBottom = false,
@@ -19,6 +21,8 @@ export default function CustomTypo({
             sx={sx}
             component={component}
             to={to}
+            fontSize={fontSize}
+            fontWeight={fontWeight}
             variant={variant}
             href = {href}
             taregt = {target}

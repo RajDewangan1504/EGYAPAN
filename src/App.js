@@ -12,7 +12,7 @@ import MainRoutes from './routes/MainRoutes';
 
 function App() {
   return (
-    <div className="min-height-100vh">
+    <div className='app'>
       <MainRoutes />
     </div>
   );

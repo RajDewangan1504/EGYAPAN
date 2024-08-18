@@ -7,6 +7,7 @@ import { AppLayout } from '../AppLayout'
 
 export default function MainRoutes() {
     return (
+
         <BrowserRouter>
             <AppLayout>
                 <Routes>
@@ -16,5 +17,6 @@ export default function MainRoutes() {
                 </Routes>
             </AppLayout>
         </BrowserRouter>
+
     )
 }

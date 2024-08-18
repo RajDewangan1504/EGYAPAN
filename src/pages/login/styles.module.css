@@ -10,10 +10,17 @@
 .box{
     display: flex;
     flex-direction: column;
-    min-width: 500px;
+    min-width: 400px;
     border-radius: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     background-color: #fff;
-    gap : 0.8rem;
+    gap : 1rem;
     border : 1px solid rgba(141, 140, 140, 0.6);
+}
+
+.footerText{
+    position: absolute;
+    bottom : 20px;
+    right : 100px;
+
 }
