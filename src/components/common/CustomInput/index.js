@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormHelperText, OutlinedInput, InputLabel, Stack, ThemeProvider } from '@mui/material'
 import { muiTheme } from '../../Utils'
-
+import styles from './styles.module.css'
 export default function CustomInput({
     id,
     name,
@@ -23,7 +23,7 @@ export default function CustomInput({
     return (
       <ThemeProvider theme={muiTheme}>
         <Stack >
-            {label && <InputLabel >{label}</InputLabel>}
+            {label && <InputLabel size='15px'>{label}</InputLabel>}
             <OutlinedInput
                 fullWidth
                 error={error}
@@ -31,6 +31,7 @@ export default function CustomInput({
                 type={type}
                 value={value}
                 name={name}
+                className={styles.main}
                 onBlur={onBlur}
                 disabled={disabled}
                 rowsMax={maxRow}

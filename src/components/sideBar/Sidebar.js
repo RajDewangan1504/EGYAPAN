@@ -7,8 +7,8 @@ import '../../global.css'
 
 function Sidebar() {
   return (
-    <div className={`height-100vh d-flex flex-column ${styles.sidebar}`}>
-      <div className={`mb-2 mt-5  ${styles.logo}`}>
+    <div className={`d-flex flex-column ${styles.sidebar}`}>
+      <div className={`mb-2 mt-1  ${styles.logo}`}>
         Menu
       </div>
       <ul className={`p-0 m-0  flex-grow ${styles.menu}`}>

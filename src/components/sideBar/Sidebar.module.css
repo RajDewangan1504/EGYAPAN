@@ -1,9 +1,10 @@
 
 .sidebar {
-    width: 14rem; 
-    background-color: #f8f9fa; 
+    width: 16rem; 
+    background-color: #ffffff; 
     box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
-    padding: 1.25rem 0; 
+    padding: 1.25rem; 
+    min-height: 100%;
   }
   
   .logo {
@@ -15,7 +16,6 @@
   
   .menu {
     list-style-type: none;
-    
   }
   
   .menuItem {
