@@ -6,6 +6,7 @@ import { IconButton, InputAdornment } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CustomButton from '../../components/common/CustomButton'
 import CustomLogo from '../../components/common/CustomLogo'
+import LogoComp from '../../components/common/LogoComp'
 export default function Login() {
 
   const [data, setData] = useState({
@@ -35,7 +36,7 @@ export default function Login() {
           <CustomTypo
             variant={"h3"} fontSize={"25px"}>Login to</CustomTypo>
 
-          <CustomLogo />
+            <LogoComp />
         </div>
 
         <CustomInput

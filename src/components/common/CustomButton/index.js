@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, ThemeProvider } from '@mui/material'
 import { bgColor, muiTheme } from '../../Utils';
+import styles from './styles.module.css'
 
 export default function CustomButton({
     text,
@@ -12,7 +13,8 @@ export default function CustomButton({
     variant = "contained",
     color,
     startIcon,
-    className }) {
+    className 
+}) {
     return (
         <ThemeProvider theme={muiTheme}>
             <Button
@@ -25,7 +27,7 @@ export default function CustomButton({
                 variant={variant}
                 color={color}
                 startIcon={startIcon}
-                className={className}
+                className={`${className} ${styles.main}`}
             >
                 {text}
             </Button>

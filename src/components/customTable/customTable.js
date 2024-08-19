@@ -1,13 +1,15 @@
 import React from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Pagination } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Pagination, Divider } from '@mui/material';
 import { Tooltip } from '@mui/material';
 import PropTypes from 'prop-types';
 import cssstyle from './customTable.module.css';
 import style from './customTable.module.css';
 import CustomTypo from '../common/CustomTypo/CustomTypo';
 import CardWrap from '../common/CardWrap';
+import SearchBar from '../common/searchBar';
 
 export default function CustomTable({
+  title,
   rows,
   headData,
   gridWidth,
@@ -22,7 +24,7 @@ export default function CustomTable({
       display: 'grid',
       minWidth: '900px',
       gridTemplateColumns: gridWidth,
-      gap: '4px'
+      // gap: '4px'
     }
   };
 
@@ -35,11 +37,11 @@ export default function CustomTable({
               key={index}
               className={style.headCell}
 
-              // align={headCell.align}
-              // padding={headCell.disablePadding ? 'none' : 'normal'}
-              // sortDirection={orderBy === headCell.id ? order : false}
+            // align={headCell.align}
+            // padding={headCell.disablePadding ? 'none' : 'normal'}
+            // sortDirection={orderBy === headCell.id ? order : false}
             >
-              {headCell}
+              <CustomTypo variant={"body2"} fontWeight={500} fontSize={"1.2rem"}>{headCell}</CustomTypo>
             </TableCell>
           ))}
         </TableRow>
@@ -71,6 +73,19 @@ export default function CustomTable({
             </div>
           )}
         </div> */}
+
+        <div className='d-flex gap-3 mb-2'>
+          {title &&
+            <CustomTypo variant={"h3"} fontSize={"24px"} fontWeight={500}>{title}</CustomTypo>
+          }
+          {searchBar &&
+            <SearchBar
+              placeholder={searchBar.placeholder}
+              onChange={searchBar.onChange}></SearchBar>
+          }
+        </div>
+
+
         <Box className={style.tableBox}>
           <TableContainer
             sx={{
@@ -125,9 +140,13 @@ export default function CustomTable({
                           </div>
                         );
                       })}
+
+
                     </TableRow>
+
                   );
                 })}
+
               </TableBody>
             </Table>
           </TableContainer>
