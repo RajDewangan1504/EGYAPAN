@@ -8,8 +8,8 @@ import '../../global.css'
 function Sidebar() {
   return (
     <div className={`d-flex flex-column ${styles.sidebar}`}>
-      <div className={`mb-2 mt-1  ${styles.logo}`}>
-        Menu
+      <div className={`mb-2 mt-0  ${styles.logo}`}>
+        {/* Menu */}
       </div>
       <ul className={`p-0 m-0  flex-grow ${styles.menu}`}>
         <li className={`justify-content-center ${styles.menuItem}`}>
@@ -36,12 +36,12 @@ function Sidebar() {
             Terms & Conditions
           </NavLink>
         </li>
-        <li className={`justify-content-center ${styles.menuItem}`}>
+        {/* <li className={`justify-content-center ${styles.menuItem}`}>
           <NavLink to="/contacts" className={({ isActive }) => isActive ? styles.active : undefined}>
             <FontAwesomeIcon icon={faPhone} className={`mr-1 ${styles.menuIcon}`}  />
             Contacts
           </NavLink>
-        </li>
+        </li> */}
       </ul>
       <div className={`mt-auto ${styles.logoutSettings}`}>
         <ul className={`p-0 m-0  flex-grow ${styles.menu}`}>
@@ -51,12 +51,12 @@ function Sidebar() {
               Logout
             </NavLink>
           </li>
-          <li className={`justify-content-center mb-1 ${styles.menuItem}`}>
+          {/* <li className={`justify-content-center mb-1 ${styles.menuItem}`}>
             <NavLink to="/settings" className={({ isActive }) => isActive ? styles.active : undefined}>
               <FontAwesomeIcon icon={faCog} className={`mr-1 ${styles.menuIcon}`}  />
               Settings
             </NavLink>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

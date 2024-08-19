@@ -1,0 +1,25 @@
+
+.searchInput {
+    width: 19rem; 
+    padding: 0.5rem 0.70rem;
+    padding-right: 2.5rem;
+    padding-left: 2.5rem; 
+    border-radius: 0.25rem;
+    border: 0.0625rem solid #ddd; 
+    font-size: 0.875rem; 
+  }
+  
+  .searchIcon_2 {
+    left: 0.625rem;
+    top: 30%;
+    transform: translateX(50%);
+    color: gray;
+  }
+  
+  .searchIcon {
+    right: 0.625rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: #080202;
+  }
+  
