@@ -3,6 +3,7 @@ import { FormHelperText, OutlinedInput, InputLabel, Stack, ThemeProvider } from 
 import { muiTheme } from '../../Utils'
 import styles from './styles.module.css'
 export default function CustomInput({
+    startIcon,
     id,
     name,
     label,
@@ -41,6 +42,8 @@ export default function CustomInput({
                 placeholder={placeholder}
                 inputProps={{}}
                 endAdornment={endIcon}
+                startAdornment={startIcon}
+                size="small"
                 
             />
             {error && (

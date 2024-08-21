@@ -289,6 +289,9 @@ body {
 .mt-auto{
   margin-top: auto;
 }
+.mr-05{
+  margin-right: 0.5rem;
+}
 
 .mt-1 {
   margin-top: 1rem;

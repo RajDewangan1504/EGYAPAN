@@ -9,7 +9,8 @@ export default function SearchBar({
 
 }) {
     return (
-        <div className={`position-relative mr-1 ${styles.searchContainer}`}>
+        <div>
+     <div className={`position-relative mr-1 `}>
             <FontAwesomeIcon icon={"fa-solid fa-magnifying-glass"} className={`position-absolute cursor-pointer ${styles.searchIcon_2} `} />
             <input
                 type="text"
@@ -18,6 +19,7 @@ export default function SearchBar({
                 className={styles.searchInput}
             />
             {/* <FontAwesomeIcon icon="fa-solid fa-sliders" className={`position-absolute cursor-pointer ${styles.searchIcon}`} /> */}
+         </div>
         </div>
     )
 }

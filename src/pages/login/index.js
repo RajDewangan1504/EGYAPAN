@@ -48,7 +48,7 @@ export default function Login() {
 
         <div className='d-flex flex-column align-items-center gap-1' >
           <CustomTypo
-            variant={"h3"} fontSize={"25px"}>Login to</CustomTypo>
+            variant={"h3"} fontSize={"25px"}>Login</CustomTypo>
 
             <LogoComp />
         </div>
