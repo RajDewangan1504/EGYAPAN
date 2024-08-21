@@ -5,6 +5,7 @@ export default function LogoComp() {
     return (
         <div className={styles.container}>
             <img src={"assets/logo/logo-no-background.png"} className={styles.main} />
+            
         </div>
 
     )

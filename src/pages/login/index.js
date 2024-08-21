@@ -7,7 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CustomButton from '../../components/common/CustomButton'
 import CustomLogo from '../../components/common/CustomLogo'
 import LogoComp from '../../components/common/LogoComp'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { SAVE_USER_DATA } from '../../actions/auth'
 export default function Login() {
+
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.authReducer.user);
+  console.log(userData);
 
   const [data, setData] = useState({
     email: "",
@@ -27,6 +34,13 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleSubmit = () => {
+      const data_to_store = {
+        hello : "my name is Abhishek"
+      }
+      dispatch(SAVE_USER_DATA(data_to_store));
+  }
 
   return (
     <div className={`${styles.main} flex-1 min-height-100vh`}>
@@ -69,7 +83,7 @@ export default function Login() {
 
         <CustomButton
           text={"Login"}
-          onClick={null}
+          onClick={handleSubmit}
           fullWidth={true}
           variant="contained"
         />
