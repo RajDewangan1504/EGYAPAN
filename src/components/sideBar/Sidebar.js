@@ -19,9 +19,15 @@ function Sidebar() {
           </NavLink>
         </li>
         <li className={`justify-content-center ${styles.menuItem}`}>
-          <NavLink to="/about" className={({ isActive }) => isActive ? styles.active : undefined}>
-            <FontAwesomeIcon icon={faInfoCircle} className={`mr-1 ${styles.menuIcon}`}  />
-            About
+          <NavLink to="/patwari" className={({ isActive }) => isActive ? styles.active : undefined}>
+            <FontAwesomeIcon icon={"fa-solid fa-user"} className={`mr-1 ${styles.menuIcon}`}  />
+            All Patwari
+          </NavLink>
+        </li>
+        <li className={`justify-content-center ${styles.menuItem}`}>
+          <NavLink to="/addpatwari" className={({ isActive }) => isActive ? styles.active : undefined}>
+            <FontAwesomeIcon icon={"fa-solid fa-user"} className={`mr-1 ${styles.menuIcon}`}  />
+            Add Patwari
           </NavLink>
         </li>
         <li className={`justify-content-center ${styles.menuItem}`}>

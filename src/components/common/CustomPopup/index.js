@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-const CustomPopup = ({open,setOpen, children }) => {
+const CustomPopup = ({ open, setOpen, children }) => {
 
     const handleClose = () => {
         setOpen(false);
@@ -21,17 +21,12 @@ const CustomPopup = ({open,setOpen, children }) => {
             open={open}
             onClose={handleClose}
         >
-            
-             <div >
-             <Button onClick={handleClose} className={Styles.flex} ><FontAwesomeIcon icon="fa-solid fa-xmark" fontSize={"20px"} color='#0005' /></Button>
-             </div>
-                
-         
+            <Button onClick={handleClose} className={Styles.flex} ><FontAwesomeIcon icon="fa-solid fa-xmark" fontSize={"20px"} color='#0005' /></Button>
             <DialogContent>
                 {children}
 
             </DialogContent>
-           
+
         </Dialog>
     );
 };

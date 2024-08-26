@@ -1,0 +1,9 @@
+.main {
+    position: relative;
+}
+
+.addBtn{
+    position: absolute;
+    top :1rem;
+    right : 1rem;
+}
