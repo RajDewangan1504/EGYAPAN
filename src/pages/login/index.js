@@ -10,19 +10,28 @@ import LogoComp from '../../components/common/LogoComp'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { SAVE_USER_DATA } from '../../actions/auth'
+import Loading from '../../components/common/Loading'
+import { login } from '../../services/AuthServices'
+import { useNavigate } from 'react-router-dom'
+
+
+
 export default function Login() {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector(state => state.authReducer.user);
-  console.log(userData);
 
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: ""
   })
+  const [error, setError] = useState("");
 
   const handleOnChange = (event) => {
-    setData({ [event.name]: event.value });
+
+    setData({ ...data, [event.target.name]: event.target.value });
   }
 
 
@@ -35,22 +44,40 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const handleSubmit = () => {
-      const data_to_store = {
-        hello : "my name is Abhishek"
+  const handleSubmit = async () => {
+    setError("");
+    setLoading(true);
+    login(data).then(
+      res => {
+        setLoading(false);
+        if (res.success) {
+          console.log(res);
+          dispatch(SAVE_USER_DATA(res.data));
+          navigate("/");
+        }
+        else {
+          setError(res.message);
+        }
+
       }
-      dispatch(SAVE_USER_DATA(data_to_store));
+    ).catch((error)=>{
+        setLoading(false);
+    })
   }
 
   return (
     <div className={`${styles.main} flex-1 min-height-100vh`}>
       <div className={styles.box}>
 
+        {loading &&
+          <Loading />
+        }
+
         <div className='d-flex flex-column align-items-center gap-1' >
           <CustomTypo
             variant={"h3"} fontSize={"25px"}>Login</CustomTypo>
+          <LogoComp />
 
-            <LogoComp />
         </div>
 
         <CustomInput
@@ -62,7 +89,7 @@ export default function Login() {
 
 
         <CustomInput
-          name={"Password"}
+          name={"password"}
           type={!showPassword ? "text" : "password"}
           onChange={handleOnChange}
           fullWidth
@@ -81,18 +108,23 @@ export default function Login() {
           </InputAdornment>}
         />
 
+        {error &&
+          <CustomTypo variant={"body1"} fontSize={"12px"}>{error}</CustomTypo>
+        }
+
         <CustomButton
           text={"Login"}
           onClick={handleSubmit}
           fullWidth={true}
           variant="contained"
         />
+
+
+
       </div>
 
       <div className={styles.footerText}>
-       
-          <CustomTypo variant="body2" fontSize={"12px"}>Designed by <u>BitCrackers.com</u><sup>©</sup></CustomTypo>
-       
+        <CustomTypo variant="body2" fontSize={"12px"}>Designed by <u>BitCrackers.com</u><sup>©</sup></CustomTypo>
       </div>
 
     </div>

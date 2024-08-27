@@ -11,3 +11,5 @@ export const muiTheme = createTheme({
         }
     }
 }) 
+
+export const SERVER_URL = "https://zgyapan-backend.vercel.app/api/v1/"

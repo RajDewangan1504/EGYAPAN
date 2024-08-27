@@ -12,12 +12,13 @@ export default function CustomButton({
     onClick,
     variant = "contained",
     color,
+    loading = false,
     startIcon,
-    className 
+    className
 }) {
     return (
         <ThemeProvider theme={muiTheme}>
-            <Button
+             <Button
                 disableElevation
                 disabled={disabled}
                 fullWidth={fullWidth}
@@ -31,6 +32,7 @@ export default function CustomButton({
             >
                 {text}
             </Button>
+            
         </ThemeProvider>
 
     )
