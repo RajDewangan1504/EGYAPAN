@@ -26,6 +26,7 @@ export default function AddPatwariForm({ open,refresh,  setOpen }) {
 
     const handleSubmit = () => {
         setLoading(true);
+        setError("");
         addPatwari(data, auth.token).then(
             res => {
                 setLoading(false);
@@ -33,7 +34,7 @@ export default function AddPatwariForm({ open,refresh,  setOpen }) {
                 if(res.success){
                     refresh();
                     setOpen(false);
-                    
+ 
                 }
                 else
                 {
