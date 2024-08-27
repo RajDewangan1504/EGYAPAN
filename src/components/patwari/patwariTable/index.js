@@ -1,48 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import CustomTypo from '../../common/CustomTypo/CustomTypo';
 import CustomButton from '../../common/CustomButton';
 import CustomTable from '../../customTable/customTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddPatwariForm from '../addpatwarifForm';
+import { getAllPatwari } from '../../../services/PatwariServices';
+import { useSelector } from 'react-redux';
 
 
 export default function PatwariTable() {
+
+
+    const [data, setData] = useState([]);
+    const auth = useSelector(state => state.authReducer.user);
+   
 
 
     const [openAddForm, setOpenAddForm] = useState(false);
 
     const gridWidth = "0.5fr 1fr 1fr 1fr 1fr 1fr"
     const headData = ["No.", "Name", "Halka Number", "Phone Number", "Completed", "Pending"];
-    const data = [
-        {
-            name: "Jagaat Singh",
-            halkaNubmer : "12",
-            phoneNumber : "1234567890",
-            Completed : "10",
-            Pending : "15",
-        },
-        {
-            name: "Jagaat Singh",
-            halkaNubmer : "12",
-            phoneNumber : "1234567890",
-            Completed : "10",
-            Pending : "15",
-        },
-        {
-            name: "Jagaat Singh",
-            halkaNubmer : "12",
-            phoneNumber : "1234567890",
-            Completed : "10",
-            Pending : "15",
-        },
-        {
-            name: "Jagaat Singh",
-            halkaNubmer : "12",
-            phoneNumber : "1234567890",
-            Completed : "10",
-            Pending : "15",
-        },];
+    // const data = [
+    //     {
+    //         name: "Jagaat Singh",
+    //         halkaNubmer : "12",
+    //         phoneNumber : "1234567890",
+    //         Completed : "10",
+    //         Pending : "15",
+    //     },
+    //     {
+    //         name: "Jagaat Singh",
+    //         halkaNubmer : "12",
+    //         phoneNumber : "1234567890",
+    //         Completed : "10",
+    //         Pending : "15",
+    //     },
+    //     {
+    //         name: "Jagaat Singh",
+    //         halkaNubmer : "12",
+    //         phoneNumber : "1234567890",
+    //         Completed : "10",
+    //         Pending : "15",
+    //     },
+    //     {
+    //         name: "Jagaat Singh",
+    //         halkaNubmer : "12",
+    //         phoneNumber : "1234567890",
+    //         Completed : "10",
+    //         Pending : "15",
+    //     },];
     const keys = ["index", "name", "halkaNumber", "phoneNumber", "Completed", "Pending"]
 
 
@@ -62,7 +69,7 @@ export default function PatwariTable() {
             if (item === 'halkaNumber') {
                 return (
                     <div key={i}>
-                        <CustomTypo>{dataItem?.halkaNubmer}</CustomTypo>
+                        <CustomTypo>{dataItem?.halkaNumber}</CustomTypo>
                     </div>
                 )
             }
@@ -80,6 +87,27 @@ export default function PatwariTable() {
             }
         })
     );
+
+
+
+    const getData = async() => {
+        
+        getAllPatwari(auth.user._id, auth.token).then(
+            res => {
+                if(res.success){
+                    setData(res.data);
+                    console.log(res);
+                }
+                else{
+                    
+                }
+            }
+        )
+    }
+
+    useEffect(()=>{
+        getData();
+    },[])
 
 
     return (
@@ -109,6 +137,7 @@ export default function PatwariTable() {
             <AddPatwariForm 
                 open = {openAddForm}
                 setOpen={setOpenAddForm}
+                refresh={getData}
             />
 
             
