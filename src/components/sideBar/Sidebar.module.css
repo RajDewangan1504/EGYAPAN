@@ -1,6 +1,7 @@
 
 .sidebar {
-    width: 17rem; 
+    width: 15rem; 
+    /* width: fit-content; */
     background-color: #fff;
    
     box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.05);
@@ -43,6 +44,32 @@
   }
   
   .menuItem a.active {
+    background-color: #e5e7eb;
+    font-weight: bold;
+    color: #4a4a4a;
+  }
+
+
+  .menuItem button {
+    width: 100%;
+    text-decoration: none;
+    color: #333;
+    font-size: .9rem; 
+    
+    display: flex;
+    align-items: center;
+    
+    padding: .5rem 1rem;
+    border-radius: 0.5rem; 
+    transition: background-color 0.3s ease;
+    border: none;
+  }
+  
+  .menuItem button:hover {
+    background-color: #c0c9dfcc;
+  }
+  
+  .menuItem button.active {
     background-color: #e5e7eb;
     font-weight: bold;
     color: #4a4a4a;
