@@ -8,6 +8,7 @@ import CustomInput from '../../common/CustomInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CustomButton from '../../common/CustomButton';
 import CustomSelect from '../../common/CustomSelect/index'
+import { uploadFile } from '../../../utils/s3Helper';
 
 const CreateGyapan = ({ open, setOpen }) => {
 
@@ -26,8 +27,6 @@ const CreateGyapan = ({ open, setOpen }) => {
         { label: 'Option 3', value: 'option3' },
     ];
 
-   
-
 
 
     const handleChange = (e) => {
@@ -41,8 +40,11 @@ const CreateGyapan = ({ open, setOpen }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    };
 
-        console.log(formData);
+    const handleFileInput = (event) => {
+        const file = event.target.files[0];
+        uploadFile(file);
     };
 
     return (
@@ -112,11 +114,6 @@ const CreateGyapan = ({ open, setOpen }) => {
 
 
 
-
-                    
-
-
-
                     <CustomInput
                         label={" टिप्पणी"}
                         name="notes"
@@ -134,10 +131,10 @@ const CreateGyapan = ({ open, setOpen }) => {
                     <div className={styles.buttons}>
 
                         <input
-
                             style={{ display: 'none' }}
                             id="file-upload"
                             type="file"
+                            onChange={handleFileInput} 
                         />
 
 
