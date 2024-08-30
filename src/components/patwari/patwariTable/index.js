@@ -139,6 +139,9 @@ export default function PatwariTable() {
                 setOpen={setOpenAddForm}
                 refresh={getData}
             />
+
+            
+
         </div>
     );
 };

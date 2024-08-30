@@ -275,14 +275,6 @@ body {
 .width-90{
   width: 90%;
 }
-
-.width-30{
-  width: 30%;
-}
-
-.width-50{
-  width: 50%;
-}
 .width-max-content {
   width: max-content;
 }
@@ -324,9 +316,6 @@ body {
 }
 .mr-2{
   margin-right: 2rem;
-}
-.ml-2{
-  margin-left: 2rem;
 }
 
 .p-1-half {
@@ -393,16 +382,7 @@ body {
   color: var(--primary);
 }
 
-.p-05{
-  padding: 5px;
- 
-}
-.b{
-  border-radius: 5px;
-}
-.black{
-  color: #000;
-}
+
 
 .d-flex {
   display: flex;

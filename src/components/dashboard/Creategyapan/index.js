@@ -1,180 +1,73 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CustomPopup from '../../common/CustomPopup';
-import styles from './styles.module.css';
+import CustomTypo from '../../common/CustomTypo/CustomTypo';
+import styles from './styles.module.css'
 import CustomInput from '../../common/CustomInput';
-import { getVillagesByHalka, getGyapanTypes, allPatwari } from '../../../services/ConstantServices';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import '../../../global.css'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CustomButton from '../../common/CustomButton';
-import CustomSelect from '../../common/CustomSelect/index';
+import CustomSelect from '../../common/CustomSelect/index'
 import { uploadFile } from '../../../utils/s3Helper';
-import { useSelector } from 'react-redux';
-import { createGyapan } from '../../../services/ConstantServices';
-import { formatISO, parseISO } from 'date-fns';  
-import { convertDateToTimestamp } from '../../Utils';
-
-
-
 
 const CreateGyapan = ({ open, setOpen }) => {
-    const auth = useSelector(state => state.authReducer.user);
 
     const [formData, setFormData] = useState({
-        tehsil: auth.user._id,
-        deadline: '',  
+        deadline: '',
         gyapanId: '',
-        caseId: '',
-        category: '',
-        patwari: '', 
-        village: '',
-        attachment: '',
-        remark: ''
+        caseNumber: '',
+        gyapanType: '',
+        patwariName: '',
+        notes: ''
     });
 
-    const [patwariName, setPatwariName] = useState([]);
-    const [villages, setVillages] = useState([]);
-    const [gyapanType, setGyapanType] = useState([]);
-    const [fileName, setFileName] = useState('');
+    const gyapanType = [
+        { label: 'Option 1', value: 'option1' },
+        { label: 'Option 2', value: 'option2' },
+        { label: 'Option 3', value: 'option3' },
+    ];
 
-    useEffect(() => {
-        if (open) {
-            getData();
-        }
-    }, [open]);
 
-    const getData = async () => {
-        try {
-            
-            const resPatwari = await allPatwari(auth.user._id, auth.token);
-            if (resPatwari.success) {
-                const names = resPatwari.data.map(patwari => ({
-                    label: patwari.name,
-                    value: patwari._id, 
-                    halkaNumber: patwari.halkaNumber 
-                }));
-                setPatwariName(names);
-            } else {
-                console.error('Failed to retrieve patwari list');
-            }
 
-            // Fetch gyapan types
-
-            const resGyapanTypes = await getGyapanTypes(auth.token);
-            if (resGyapanTypes.success) {
-                const types = resGyapanTypes.data.map(type => ({
-                    label: type.name,
-                    value: type._id
-                }));
-                setGyapanType(types);
-            } else {
-                console.error('Failed to retrieve gyapan types list');
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleChange = async (e) => {
 
-        const { name, value } = e.target;
 
-        if (name === 'patwari') {
-
-       
-
-            const selectedPatwari = patwariName.find(patwari => patwari.value === value);
-            const halkaNumber = selectedPatwari ? selectedPatwari.halkaNumber : '';
-
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-
-            if (halkaNumber) {
-                try {
-                    const res = await getVillagesByHalka(halkaNumber, auth.token);
-                    if (res.success) {
-                        const villageOptions = res.data.map(village => ({
-                            label: village.name,
-                            value: village._id,
-                        }));
-                        setVillages(villageOptions);
-                    } else {
-                        console.error('Failed to retrieve villages list');
-                    }
-                } catch (error) {
-                    console.error('An error occurred:', error);
-                }
-            }
-        } 
-        else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-        }
-    };
-
-    const handleFileInput = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            try {
-                const result = await uploadFile(file);
-                setFileName(file.name);
-                setFormData({
-                    ...formData,
-                    attachment: result.Location 
-                });
-            } catch (error) {
-                console.error('File upload failed:', error);
-            }
-        }
-    };
-    
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+    };
 
-        const date = convertDateToTimestamp(formData.deadline) ;
-        const dataToSend = {...formData,
-            deadline : date}
-
-        
-
-
-        try {
-            console.log("formdata",dataToSend);
-            const response = await createGyapan(dataToSend, auth.token);
-            
-            if (response.success) {
-                
-                console.log('Gyapan created successfully:', response.data);
-                
-                setOpen(false);
-            } else {
-                console.error('Failed to create gyapan:', response.message);
-            }
-        } catch (error) {
-            console.error('An error occurred while creating gyapan:', error);
-        }
+    const handleFileInput = (event) => {
+        const file = event.target.files[0];
+        uploadFile(file);
     };
 
     return (
         <CustomPopup
             open={open}
             setOpen={setOpen}
+
         >
+
             <div className={styles.formContainer}>
                 <h2 className={styles.title}>ज्ञापन</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                <CustomInput
+
+                    <CustomInput
                         label={"ज्ञापन की समय सीमा"}
                         onChange={handleChange}
-                        type={"datetime-local"}
+                        type={"date"}
                         name="deadline"
-                        value={formData.deadline} // Display ISO date string
+                        value={formData.deadline}
                         placeholder={"ज्ञापन की समय सीमा"}
                         color="#0005"
                         startIcon={<FontAwesomeIcon icon={"fa-solid fa-calendar-days"} color='#0005' className='mr-05' />}
+
                     />
 
                     <CustomInput
@@ -186,74 +79,73 @@ const CreateGyapan = ({ open, setOpen }) => {
                         placeholder={"ज्ञापन ID"}
                         className={styles.input}
                         startIcon={<FontAwesomeIcon icon="fa-regular fa-pen-to-square" color='#0005' className='mr-05' />}
+
                     />
+
 
                     <CustomInput
                         label={"मामला क्रमांक"}
                         type={"text"}
-                        name="caseId"
-                        value={formData.caseId}
+                        name="caseNumber"
+                        value={formData.caseNumber}
                         onChange={handleChange}
                         placeholder={"मामला क्रमांक"}
                         startIcon={<FontAwesomeIcon icon="fa-solid fa-keyboard" color='#0005' className='mr-05' />}
                     />
 
+
                     <CustomSelect
                         label="ज्ञापन प्रकार"
-                        placeholder={"ज्ञापन प्रकार"}
+                        plceholder={"ज्ञापन प्रकार"}
                         options={gyapanType}
-                        value={formData.category}
+                        value={formData.gyapanType}
                         onChange={handleChange}
-                        name="category"
+                        name="gyapanType"
                     />
 
                     <CustomSelect
                         label={"पटवारी का नाम"}
                         placeholder={"पटवारी का नाम"}
-                        options={patwariName}
-                        value={formData.patwari}
+                        options={gyapanType}
+                        value={formData.patwariName}
                         onChange={handleChange}
-                        name="patwari"
+                        name="gyapanType"
                     />
 
-                    <CustomSelect
-                        label={"ग्राम "}
-                        placeholder={"ग्राम "}
-                        options={villages}
-                        value={formData.village}
-                        onChange={handleChange}
-                        name="village"
-                    />
+
 
                     <CustomInput
                         label={" टिप्पणी"}
-                        name="remark"
+                        name="notes"
                         type={"text"}
-                        value={formData.remark}
+                        value={formData.notes}
                         onChange={handleChange}
                         multiline
                         maxRows={4}
                         maxRow={4}
                         startIcon={<FontAwesomeIcon icon="fa-solid fa-message" color='#0005' className='mr-05' />}
+
                         placeholder={"टिप्पणी"}
                     />
 
                     <div className={styles.buttons}>
-                        <div className='d-flex width-50 align-items-center'>
-                            <input
-                                style={{ display: 'none' }}
-                                id="file-upload"
-                                type="file"
-                                onChange={handleFileInput}
-                            />
-                            <CustomButton
-                                text="Upload File"
-                                onClick={() => document.getElementById('file-upload').click()}
-                            />
-                            {fileName && (
-                                <span className="ml-2 border-primary-gradient p-05">{fileName}</span>
-                            )}
-                        </div>
+
+                        <input
+                            style={{ display: 'none' }}
+                            id="file-upload"
+                            type="file"
+                            onChange={handleFileInput} 
+                        />
+
+
+
+                        <CustomButton
+                            text="Upload File"
+                            onClick={() => document.getElementById('file-upload').click()}
+
+                        />
+
+
 
                         <CustomButton
                             type="submit"
