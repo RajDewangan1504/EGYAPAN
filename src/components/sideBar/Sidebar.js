@@ -26,7 +26,7 @@ function Sidebar() {
       </div>
       <ul className={`p-0 m-0  flex-grow ${styles.menu}`}>
         <li className={`justify-content-center ${styles.menuItem}`}>
-          <NavLink exact to="/" className={({ isActive }) => isActive ? styles.active : undefined}>
+          <NavLink exact to="/dashboard" className={({ isActive }) => isActive ? styles.active : undefined}>
             <FontAwesomeIcon icon={faHome} className={`mr-1 ${styles.menuIcon}`} />
             Dashboard
           </NavLink>

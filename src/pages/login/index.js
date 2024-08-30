@@ -53,7 +53,7 @@ export default function Login() {
         if (res.success) {
           console.log(res);
           dispatch(SAVE_USER_DATA(res.data));
-          navigate("/");
+          navigate("/dashboard");
         }
         else {
           setError(res.message);
