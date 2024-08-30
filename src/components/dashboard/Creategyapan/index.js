@@ -19,7 +19,7 @@ const CreateGyapan = ({ open, setOpen }) => {
     const auth = useSelector(state => state.authReducer.user);
 
     const [formData, setFormData] = useState({
-        tehsil: auth.user._id,
+        tehsil: '',
         deadline: '',  
         gyapanId: '',
         caseId: '',
@@ -38,8 +38,14 @@ const CreateGyapan = ({ open, setOpen }) => {
     useEffect(() => {
         if (open) {
             getData();
+            setFormData({
+                ...formData,
+               tehsil: auth.user._id.toString(),
+            }); 
         }
     }, [open]);
+
+    
 
     const getData = async () => {
         try {
@@ -74,6 +80,8 @@ const CreateGyapan = ({ open, setOpen }) => {
     };
 
     const handleChange = async (e) => {
+
+              
 
         const { name, value } = e.target;
 
@@ -133,6 +141,8 @@ const CreateGyapan = ({ open, setOpen }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+       
 
         const date = convertDateToTimestamp(formData.deadline) ;
         const dataToSend = {...formData,
