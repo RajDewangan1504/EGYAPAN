@@ -15,8 +15,7 @@ export default function MainRoutes() {
         <AppLayout>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Navigate to="/login" />} />
-                <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+                <Route path="/" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
                 <Route path="/patwari" element={isAuthenticated ? <Patwari /> : <Navigate to="/login" />} />
                 <Route path="/addpatwari" element={isAuthenticated ? <AddPatwari /> : <Navigate to="/login" />} />
             </Routes>
