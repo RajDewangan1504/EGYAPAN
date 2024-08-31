@@ -13,8 +13,8 @@ export const addPatwari = async(data, token) => {
     return result;
 }
 
-export const getAllPatwari = async(id, token) => {
-    const res = await fetch(`${SERVER_URL}patwari/tehsil/${id}`);
-    const result = await res.json();
-    return result;
-}
+// export const getAllPatwari = async(id, token) => {
+//     const res = await fetch(`${SERVER_URL}patwari/tehsil/${id}`);
+//     const result = await res.json();
+//     return result;
+// }

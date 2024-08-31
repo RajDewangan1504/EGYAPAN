@@ -12,7 +12,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className={`d-flex flex-column width-80 ${styles.dashboardContainer}`}>
+    <div className={`d-flex flex-column width-100 ${styles.dashboardContainer}`}>
       <div className='d-flex justify-content-between mt-1'>
         <StatsOverview />
        
