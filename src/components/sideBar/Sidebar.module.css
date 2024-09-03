@@ -5,7 +5,7 @@
     background-color: #fff;
    
     box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.05);
-    
+    /* position: static; */
     padding: 1.25rem; 
     min-height: 100%;
   }

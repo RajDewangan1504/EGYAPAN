@@ -18,6 +18,12 @@ export const getGyapanTypes = async( token) => {
     return result;
 }
 
+export const getGyapans = async(id,token) => {
+    const res = await fetch(`${SERVER_URL}gyapan/getall/${id}`);
+    const result = await res.json();
+    return result;
+}
+
 export const createGyapan = async (data, token) => {
     try {
         const response = await fetch(`${SERVER_URL}gyapan/create`, {

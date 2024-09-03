@@ -1,6 +1,7 @@
 .main{
     background-color: #fff;
     display: flex;
+    position: sticky;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

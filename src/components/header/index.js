@@ -12,7 +12,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={styles.main}>
+    <div className={styles.main} >
       <LogoComp />
       <div className='d-flex align-items-center gap-2'>
         <CustomTypo variant={"h3"} fontSize={"1rem"} fontWeight={"500"}>

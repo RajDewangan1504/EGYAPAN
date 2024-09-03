@@ -9,8 +9,10 @@ import CustomSelect from '../../common/CustomSelect/index';
 import { uploadFile } from '../../../utils/s3Helper';
 import { useSelector } from 'react-redux';
 import { createGyapan } from '../../../services/ConstantServices';
-import { formatISO, parseISO } from 'date-fns';  
+import { formatISO, parseISO } from 'date-fns';
 import { convertDateToTimestamp } from '../../Utils';
+import Loading from '../../common/Loading'
+import CustomTypo from '../../common/CustomTypo/CustomTypo'
 
 
 
@@ -19,12 +21,12 @@ const CreateGyapan = ({ open, setOpen }) => {
     const auth = useSelector(state => state.authReducer.user);
 
     const [formData, setFormData] = useState({
-        tehsil: auth.user._id,
-        deadline: '',  
+        tehsil: '',
+        deadline: '',
         gyapanId: '',
         caseId: '',
         category: '',
-        patwari: '', 
+        patwari: '',
         village: '',
         attachment: '',
         remark: ''
@@ -34,22 +36,30 @@ const CreateGyapan = ({ open, setOpen }) => {
     const [villages, setVillages] = useState([]);
     const [gyapanType, setGyapanType] = useState([]);
     const [fileName, setFileName] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         if (open) {
             getData();
+            setFormData({
+                ...formData,
+                tehsil: auth.user._id.toString(),
+            });
         }
     }, [open]);
 
+
+
     const getData = async () => {
         try {
-            
+
             const resPatwari = await allPatwari(auth.user._id, auth.token);
             if (resPatwari.success) {
                 const names = resPatwari.data.map(patwari => ({
                     label: patwari.name,
-                    value: patwari._id, 
-                    halkaNumber: patwari.halkaNumber 
+                    value: patwari._id,
+                    halkaNumber: patwari.halkaNumber
                 }));
                 setPatwariName(names);
             } else {
@@ -75,11 +85,13 @@ const CreateGyapan = ({ open, setOpen }) => {
 
     const handleChange = async (e) => {
 
+
+
         const { name, value } = e.target;
 
         if (name === 'patwari') {
 
-       
+
 
             const selectedPatwari = patwariName.find(patwari => patwari.value === value);
             const halkaNumber = selectedPatwari ? selectedPatwari.halkaNumber : '';
@@ -105,7 +117,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                     console.error('An error occurred:', error);
                 }
             }
-        } 
+        }
         else {
             setFormData({
                 ...formData,
@@ -116,45 +128,66 @@ const CreateGyapan = ({ open, setOpen }) => {
 
     const handleFileInput = async (event) => {
         const file = event.target.files[0];
+        setLoading(true);
         if (file) {
             try {
                 const result = await uploadFile(file);
                 setFileName(file.name);
                 setFormData({
                     ...formData,
-                    attachment: result.Location 
+                    attachment: result.Location
                 });
+                setLoading(false);
             } catch (error) {
                 console.error('File upload failed:', error);
+                setLoading(false);
             }
         }
     };
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+        setLoading(true);
 
-        const date = convertDateToTimestamp(formData.deadline) ;
-        const dataToSend = {...formData,
-            deadline : date}
+        const date = convertDateToTimestamp(formData.deadline);
+        const dataToSend = {
+            ...formData,
+            deadline: date
+        }
 
-        
+
 
 
         try {
-            console.log("formdata",dataToSend);
+            console.log("formdata", dataToSend);
             const response = await createGyapan(dataToSend, auth.token);
-            
+
             if (response.success) {
-                
+                setLoading(false);
                 console.log('Gyapan created successfully:', response.data);
-                
+                setFormData({
+                    tehsil: '',
+                    deadline: '',
+                    gyapanId: '',
+                    caseId: '',
+                    category: '',
+                    patwari: '',
+                    village: '',
+                    attachment: '',
+                    remark: ''
+                })
+
+                setFileName('');
+
                 setOpen(false);
             } else {
                 console.error('Failed to create gyapan:', response.message);
             }
         } catch (error) {
             console.error('An error occurred while creating gyapan:', error);
+            setLoading(false);
         }
     };
 
@@ -164,9 +197,11 @@ const CreateGyapan = ({ open, setOpen }) => {
             setOpen={setOpen}
         >
             <div className={styles.formContainer}>
+                {loading &&
+                    <Loading />}
                 <h2 className={styles.title}>ज्ञापन</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                <CustomInput
+                    <CustomInput
                         label={"ज्ञापन की समय सीमा"}
                         onChange={handleChange}
                         type={"datetime-local"}
@@ -254,6 +289,10 @@ const CreateGyapan = ({ open, setOpen }) => {
                                 <span className="ml-2 border-primary-gradient p-05">{fileName}</span>
                             )}
                         </div>
+
+                        {error &&
+                            <CustomTypo fontSize={"14px"}>{error}</CustomTypo>
+                        }
 
                         <CustomButton
                             type="submit"

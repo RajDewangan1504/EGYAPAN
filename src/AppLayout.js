@@ -22,14 +22,24 @@ export function AppLayout({ children }) {
         dispatch(logout());
     };
 
-    const showSidebar = location.pathname !== '/login'; 
+    const showSidebar = location.pathname !== '/login';
 
     return (
-        <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: 'column' }}>
-            {showSidebar && <Header onLogout={handleLogout} />}
-            <div className="d-flex" style={{ height: "100%" }}>
-                {showSidebar && <Sidebar />}
-                {children}
+        <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: 'column',overflow: "hidden" }}>
+            {showSidebar && (
+                <div style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 1 }}>
+                    <Header onLogout={handleLogout} />
+                </div>
+            )}
+            <div style={{ display: "flex", height: "100%", marginTop: showSidebar ? "64px" : "0" }}>
+                {showSidebar && (
+                    <div style={{ position: "fixed", top: "64px", left: 0, height: "calc(100vh - 64px)", width: "250px" }}>
+                        <Sidebar />
+                    </div>
+                )}
+                <div style={{ marginLeft: showSidebar ? "250px" : "0", width: "100%", overflowY: "auto", padding: "20px" }}>
+                    {children}
+                </div>
             </div>
         </div>
     );

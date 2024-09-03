@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddPatwariForm from '../addpatwarifForm';
 import { getAllPatwari } from '../../../services/PatwariServices';
 import { useSelector } from 'react-redux';
-
+import { getVillagesByHalka, getGyapanTypes, allPatwari } from '../../../services/ConstantServices';
+import Loading from '../../common/Loading';
+import { set } from 'date-fns';
 
 export default function PatwariTable() {
 
@@ -18,38 +20,10 @@ export default function PatwariTable() {
 
 
     const [openAddForm, setOpenAddForm] = useState(false);
-
+    const [loading, setLoading] = useState(false);
     const gridWidth = "0.5fr 1fr 1fr 1fr 1fr 1fr"
     const headData = ["No.", "Name", "Halka Number", "Phone Number", "Completed", "Pending"];
-    // const data = [
-    //     {
-    //         name: "Jagaat Singh",
-    //         halkaNubmer : "12",
-    //         phoneNumber : "1234567890",
-    //         Completed : "10",
-    //         Pending : "15",
-    //     },
-    //     {
-    //         name: "Jagaat Singh",
-    //         halkaNubmer : "12",
-    //         phoneNumber : "1234567890",
-    //         Completed : "10",
-    //         Pending : "15",
-    //     },
-    //     {
-    //         name: "Jagaat Singh",
-    //         halkaNubmer : "12",
-    //         phoneNumber : "1234567890",
-    //         Completed : "10",
-    //         Pending : "15",
-    //     },
-    //     {
-    //         name: "Jagaat Singh",
-    //         halkaNubmer : "12",
-    //         phoneNumber : "1234567890",
-    //         Completed : "10",
-    //         Pending : "15",
-    //     },];
+    
     const keys = ["index", "name", "halkaNumber", "phoneNumber", "Completed", "Pending"]
 
 
@@ -91,15 +65,17 @@ export default function PatwariTable() {
 
 
     const getData = async() => {
-        
-        getAllPatwari(auth.user._id, auth.token).then(
+        setLoading(true);
+        allPatwari(auth.user._id, auth.token).then(
             res => {
                 if(res.success){
                     setData(res.data);
                     console.log(res);
+                    setLoading(false);
                 }
                 else{
-                    
+                    console.error('Failed to retrieve patwari list');
+                    setLoading(false);
                 }
             }
         )
@@ -112,6 +88,8 @@ export default function PatwariTable() {
 
     return (
         <div className={styles.main}>
+         {loading &&
+            <Loading />}
             <CustomTable
                 title={"Patwari"}
                 gridWidth={gridWidth}
