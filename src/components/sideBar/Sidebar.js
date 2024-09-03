@@ -37,12 +37,12 @@ function Sidebar() {
             All Patwari
           </NavLink>
         </li>
-        <li className={`justify-content-center ${styles.menuItem}`}>
+        {/* <li className={`justify-content-center ${styles.menuItem}`}>
           <NavLink to="/addpatwari" className={({ isActive }) => isActive ? styles.active : undefined}>
             <FontAwesomeIcon icon={"fa-solid fa-user"} className={`mr-1 ${styles.menuIcon}`} />
             Add Patwari
           </NavLink>
-        </li>
+        </li> */}
         <li className={`justify-content-center ${styles.menuItem}`}>
           <NavLink to="/privacy-policy" className={({ isActive }) => isActive ? styles.active : undefined}>
             <FontAwesomeIcon icon={faLock} className={`mr-1 ${styles.menuIcon}`} />

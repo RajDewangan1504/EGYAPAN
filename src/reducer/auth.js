@@ -2,7 +2,7 @@
 import { USER_DATA, LOGOUT } from "../actions/auth";
 
 const initialState = {
-    user: "hello", 
+    user: null, 
 };
 
 export const authReducer = (state = initialState, action) => {
