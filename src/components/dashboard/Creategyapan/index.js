@@ -54,7 +54,7 @@ const CreateGyapan = ({ open, setOpen }) => {
     const getData = async () => {
         try {
 
-            const resPatwari = await allPatwari(auth.user._id, auth.token);
+            const resPatwari = await allPatwari(auth.user?._id, auth.token);
             if (resPatwari.success) {
                 const names = resPatwari.data.map(patwari => ({
                     label: patwari.name,
