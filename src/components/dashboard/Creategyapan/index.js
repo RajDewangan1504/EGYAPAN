@@ -44,7 +44,7 @@ const CreateGyapan = ({ open, setOpen }) => {
             getData();
             setFormData({
                 ...formData,
-                tehsil: auth.user._id.toString(),
+                tehsil: auth?.user?._id.toString(),
             });
         }
     }, [open]);
