@@ -16,7 +16,8 @@ export const uploadFile = (file) => {
         Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
         Key: file.name,
         Body: file,
-        
+        ContentDisposition: 'inline',
+        ContentType: 'application/pdf'
     };
 
     return new Promise((resolve, reject) => {

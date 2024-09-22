@@ -32,6 +32,9 @@ const CreateGyapan = ({ open, setOpen }) => {
         remark: ''
     });
 
+
+    const [selectedFile , setSelectedFile] = useState(null);
+
     const [patwariName, setPatwariName] = useState([]);
     const [villages, setVillages] = useState([]);
     const [gyapanType, setGyapanType] = useState([]);
@@ -84,15 +87,8 @@ const CreateGyapan = ({ open, setOpen }) => {
     };
 
     const handleChange = async (e) => {
-
-
-
         const { name, value } = e.target;
-
         if (name === 'patwari') {
-
-
-
             const selectedPatwari = patwariName.find(patwari => patwari.value === value);
             const halkaNumber = selectedPatwari ? selectedPatwari.halkaNumber : '';
 
@@ -128,21 +124,7 @@ const CreateGyapan = ({ open, setOpen }) => {
 
     const handleFileInput = async (event) => {
         const file = event.target.files[0];
-        setLoading(true);
-        if (file) {
-            try {
-                const result = await uploadFile(file);
-                setFileName(file.name);
-                setFormData({
-                    ...formData,
-                    attachment: result.Location
-                });
-                setLoading(false);
-            } catch (error) {
-                console.error('File upload failed:', error);
-                setLoading(false);
-            }
-        }
+        setSelectedFile(file);
     };
 
 
@@ -158,6 +140,21 @@ const CreateGyapan = ({ open, setOpen }) => {
         }
 
 
+        if (selectedFile) {
+            try {
+                const result = await uploadFile(selectedFile);
+                console.log(result);
+                setFileName(selectedFile.name);
+                setFormData({
+                    ...formData,
+                    attachment: result.Location
+                });
+                setLoading(false);
+            } catch (error) {
+                console.error('File upload failed:', error);
+                setLoading(false);
+            }
+        }
 
 
         try {
@@ -285,8 +282,8 @@ const CreateGyapan = ({ open, setOpen }) => {
                                 text="Upload File"
                                 onClick={() => document.getElementById('file-upload').click()}
                             />
-                            {fileName && (
-                                <span className="ml-2 border-primary-gradient p-05">{fileName}</span>
+                            {selectedFile && (
+                                <span className="ml-2 border-primary-gradient p-05">{selectedFile?.name}</span>
                             )}
                         </div>
 
