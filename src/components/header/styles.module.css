@@ -8,3 +8,7 @@
     padding : 0rem 2rem;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
 }
+.page{
+    display: flex;
+    text-align: start;
+}

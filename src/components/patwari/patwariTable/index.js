@@ -16,14 +16,14 @@ export default function PatwariTable() {
 
     const [data, setData] = useState([]);
     const auth = useSelector(state => state.authReducer.user);
-   
+
 
 
     const [openAddForm, setOpenAddForm] = useState(false);
     const [loading, setLoading] = useState(false);
     const gridWidth = "0.5fr 1fr 1fr 1fr 1fr 1fr"
     const headData = ["No.", "Name", "Halka Number", "Phone Number", "Completed", "Pending"];
-    
+
     const keys = ["index", "name", "halkaNumber", "phoneNumber", "Completed", "Pending"]
 
 
@@ -64,16 +64,16 @@ export default function PatwariTable() {
 
 
 
-    const getData = async() => {
+    const getData = async () => {
         setLoading(true);
         allPatwari(auth.user._id, auth.token).then(
             res => {
-                if(res.success){
+                if (res.success) {
                     setData(res.data);
                     console.log(res);
                     setLoading(false);
                 }
-                else{
+                else {
                     console.error('Failed to retrieve patwari list');
                     setLoading(false);
                 }
@@ -81,15 +81,15 @@ export default function PatwariTable() {
         )
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getData();
-    },[])
+    }, [])
 
 
     return (
         <div className={styles.main}>
-         {loading &&
-            <Loading />}
+            {loading &&
+                <Loading />}
             <CustomTable
                 title={"Patwari"}
                 gridWidth={gridWidth}
@@ -99,21 +99,21 @@ export default function PatwariTable() {
                 searchBar={{
                     name: "",
                     placeholder: "Search",
-                    onChange: () => {}
+                    onChange: () => { }
                 }}
-             />
+            />
 
             <div className={styles.addBtn}>
-                <CustomButton 
+                <CustomButton
                     text={"Add Patwari"}
-                    onClick={()=>setOpenAddForm(true)}
+                    onClick={() => setOpenAddForm(true)}
                     startIcon={<FontAwesomeIcon icon="fa-solid fa-plus" fontSize={"10px"} />}
-                />   
-            </div> 
+                />
+            </div>
 
 
-            <AddPatwariForm 
-                open = {openAddForm}
+            <AddPatwariForm
+                open={openAddForm}
                 setOpen={setOpenAddForm}
                 refresh={getData}
             />

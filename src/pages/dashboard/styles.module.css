@@ -153,6 +153,20 @@
     color: #4A3AFF; 
   }
 
+.cardsContainer {
+  display: flex;
+  flex-direction: row; 
+  gap: 16px; 
+  overflow-x: auto; 
+  scrollbar-width: none; 
+}
+
+.cardsContainer::-webkit-scrollbar {
+  display: none; 
+}
+
+
+
 
 
   

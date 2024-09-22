@@ -238,7 +238,10 @@ body {
 .lh-160 {
   line-height: 160%;
 }
-
+.overflow-x{
+  overflow-x: scroll ;
+  /* overflow: hidden; */
+}
 
 .lh-175 {
   line-height: 175%;
@@ -305,6 +308,9 @@ body {
 .mt-auto{
   margin-top: auto;
 }
+.m-auto{
+  margin: auto;
+}
 .mr-05{
   margin-right: 0.5rem;
 }
@@ -328,6 +334,7 @@ body {
 .ml-2{
   margin-left: 2rem;
 }
+
 
 .p-1-half {
   padding: 1.5rem;
