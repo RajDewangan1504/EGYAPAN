@@ -3,7 +3,7 @@ import { Select, MenuItem, FormControl, InputLabel, Stack, ThemeProvider, Outlin
 import { muiTheme } from '../../Utils';
 import styles from './styles.module.css';
 
-const CustomSelect = ({ label, options, value, onChange, name, error, disabled ,plceholder}) => {
+const CustomSelect = ({ label, options, value, onChange, name, error, disabled, placeholder }) => {
     return (
         <ThemeProvider theme={muiTheme}>
             <Stack>
@@ -13,13 +13,17 @@ const CustomSelect = ({ label, options, value, onChange, name, error, disabled ,
                         value={value}
                         onChange={onChange}
                         input={<OutlinedInput />}
-                        placeholder={plceholder}
+                        placeholder={placeholder}
                         label={label}
                         name={name}
                         className={styles.selectEmpty}
                         fullWidth
                         displayEmpty
                     >
+
+                        <MenuItem value="" disabled>
+                            {placeholder}
+                        </MenuItem>
                         {options.map((option, index) => (
                             <MenuItem key={index} value={option.value} >
                                 {option.label}

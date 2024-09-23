@@ -13,6 +13,7 @@ export default function CustomTypo({
     fontWeight,
     target,
     underline,
+    className,
     gutterBottom = false,
     ...rest
 }) {
@@ -21,6 +22,7 @@ export default function CustomTypo({
             sx={sx}
             component={component}
             to={to}
+            className={className}
             fontSize={fontSize}
             fontWeight={fontWeight}
             variant={variant}

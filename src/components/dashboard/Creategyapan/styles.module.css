@@ -54,11 +54,36 @@
     margin: 10px;
 }
 
-
-
-
-
 .fileInput {
     display: none;
 }
+
+.docItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap : 0.5rem;
+    font-size: 16px;
+    margin-left: 1rem;
+    text-decoration: none;  /* Removes underline */
+    background-color: #edeef0;  /* Light grey background */
+    padding: 5px 10px;  /* Padding around the text */
+    border: 1px solid #aaa7a7;  /* Light border */
+    border-radius: 4px;  /* Rounded corners */
+    transition: background-color 0.3s, color 0.3s;  /* Smooth transition effect */
+}
+
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.error{
+    color: red; 
+    font-size: 14px; 
+    text-align: left;
+    text-transform: capitalize;
+}
+
+
 

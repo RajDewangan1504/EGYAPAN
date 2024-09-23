@@ -9,13 +9,9 @@ import CustomSelect from '../../common/CustomSelect/index';
 import { uploadFile } from '../../../utils/s3Helper';
 import { useSelector } from 'react-redux';
 import { createGyapan } from '../../../services/ConstantServices';
-import { formatISO, parseISO } from 'date-fns';
 import { convertDateToTimestamp } from '../../Utils';
 import Loading from '../../common/Loading'
 import CustomTypo from '../../common/CustomTypo/CustomTypo'
-
-
-
 
 const CreateGyapan = ({ open, setOpen }) => {
     const auth = useSelector(state => state.authReducer.user);
@@ -33,12 +29,12 @@ const CreateGyapan = ({ open, setOpen }) => {
     });
 
 
-    const [selectedFile , setSelectedFile] = useState(null);
+
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const [patwariName, setPatwariName] = useState([]);
     const [villages, setVillages] = useState([]);
     const [gyapanType, setGyapanType] = useState([]);
-    const [fileName, setFileName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -87,6 +83,7 @@ const CreateGyapan = ({ open, setOpen }) => {
     };
 
     const handleChange = async (e) => {
+        setError("");
         const { name, value } = e.target;
         if (name === 'patwari') {
             const selectedPatwari = patwariName.find(patwari => patwari.value === value);
@@ -122,6 +119,29 @@ const CreateGyapan = ({ open, setOpen }) => {
         }
     };
 
+    const validateForm = () => {
+        
+        const requiredFields = [
+            'tehsil',
+            'deadline',
+            'gyapanId',
+            'caseId',
+            'category',
+            'patwari',
+            'village',
+            'attachment'
+        ];
+        
+        requiredFields.forEach((field) => {
+            if (!formData[field]) {
+                setError(`${field} required`);
+                return false;
+            }
+        });
+
+        return true;
+    };
+
     const handleFileInput = async (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
@@ -131,20 +151,23 @@ const CreateGyapan = ({ open, setOpen }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        setLoading(true);
 
+        if(validateForm()){
+            return;
+        }
+
+        setLoading(true);
         const date = convertDateToTimestamp(formData.deadline);
         const dataToSend = {
             ...formData,
             deadline: date
         }
 
-
         if (selectedFile) {
             try {
                 const result = await uploadFile(selectedFile);
                 console.log(result);
-                setFileName(selectedFile.name);
+
                 setFormData({
                     ...formData,
                     attachment: result.Location
@@ -176,7 +199,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                     remark: ''
                 })
 
-                setFileName('');
+                setSelectedFile(null);
 
                 setOpen(false);
             } else {
@@ -232,7 +255,7 @@ const CreateGyapan = ({ open, setOpen }) => {
 
                     <CustomSelect
                         label="ज्ञापन प्रकार"
-                        placeholder={"ज्ञापन प्रकार"}
+                        placeholder={"ज्ञापन प्रकार चयन करें"}
                         options={gyapanType}
                         value={formData.category}
                         onChange={handleChange}
@@ -241,7 +264,7 @@ const CreateGyapan = ({ open, setOpen }) => {
 
                     <CustomSelect
                         label={"पटवारी का नाम"}
-                        placeholder={"पटवारी का नाम"}
+                        placeholder={"पटवारी चयन करें"}
                         options={patwariName}
                         value={formData.patwari}
                         onChange={handleChange}
@@ -249,8 +272,8 @@ const CreateGyapan = ({ open, setOpen }) => {
                     />
 
                     <CustomSelect
-                        label={"ग्राम "}
-                        placeholder={"ग्राम "}
+                        label={"ग्राम"}
+                        placeholder="ग्राम का चयन करें"
                         options={villages}
                         value={formData.village}
                         onChange={handleChange}
@@ -270,6 +293,11 @@ const CreateGyapan = ({ open, setOpen }) => {
                         placeholder={"टिप्पणी"}
                     />
 
+                    {error &&
+                        <CustomTypo fontSize={"14px"} className={styles.error}>{error}</CustomTypo>
+                    }
+
+
                     <div className={styles.buttons}>
                         <div className='d-flex width-50 align-items-center'>
                             <input
@@ -282,14 +310,20 @@ const CreateGyapan = ({ open, setOpen }) => {
                                 text="Upload File"
                                 onClick={() => document.getElementById('file-upload').click()}
                             />
-                            {selectedFile && (
-                                <span className="ml-2 border-primary-gradient p-05">{selectedFile?.name}</span>
-                            )}
+                            {selectedFile &&
+                                <div className={styles.docItem}>
+                                    <span className="p-05">{selectedFile?.name}</span>
+                                    <div
+                                        className={styles.cursorPointer}
+                                        onClick={() => {
+                                            setSelectedFile(null)
+                                        }}>
+                                        <FontAwesomeIcon icon="fa-solid fa-circle-xmark" />
+                                    </div>
+                                </div>
+                            }
                         </div>
 
-                        {error &&
-                            <CustomTypo fontSize={"14px"}>{error}</CustomTypo>
-                        }
 
                         <CustomButton
                             type="submit"
