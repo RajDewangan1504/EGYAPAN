@@ -129,7 +129,6 @@ const CreateGyapan = ({ open, setOpen }) => {
             'category',
             'patwari',
             'village',
-            'attachment'
         ];
         
         requiredFields.forEach((field) => {
@@ -138,6 +137,11 @@ const CreateGyapan = ({ open, setOpen }) => {
                 return false;
             }
         });
+
+        if(!selectedFile){
+            setError("Attachment Required.");
+            return false;
+        }
 
         return true;
     };
@@ -152,7 +156,7 @@ const CreateGyapan = ({ open, setOpen }) => {
         e.preventDefault();
         setError("");
 
-        if(validateForm()){
+        if(!validateForm()){
             return;
         }
 
@@ -172,7 +176,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                     ...formData,
                     attachment: result.Location
                 });
-                setLoading(false);
+                
             } catch (error) {
                 console.error('File upload failed:', error);
                 setLoading(false);

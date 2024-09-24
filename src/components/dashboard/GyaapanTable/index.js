@@ -39,12 +39,11 @@ const TaskTable = () => {
     }, [auth.user._id]);
 
     const downloadPDF = (pdfUrl) => {
-        const link = document.createElement('a');
-        link.href = pdfUrl;
-        link.setAttribute('download', 'Gyapan.pdf');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        if (pdfUrl) {
+            window.open(pdfUrl, '_blank');
+        } else {
+            console.error('No PDF URL provided');
+        }
     };
 
     const filteredGyapans = gyapans.filter(dataItem => {
