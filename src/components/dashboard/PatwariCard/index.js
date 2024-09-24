@@ -5,11 +5,13 @@ import styles from './styles.module.css';
 const COLORS = ["#FFBB28", "#00C49F", "#FF4D4F"];
 
 const PatwariCard = ({ patwari, taskData }) => {
+
+
   return (
     <div className={`d-flex flex-column justify-content-between align-items-center ${styles.card}`}>
       <div className={`d-flex align-items-center  ${styles.topSection}`}>
         <div >
-          <p className={styles.largeNumber}>{patwari.completedTasks}</p>
+          <p className={styles.largeNumber}>101</p>
           <p className={`d-flex justify-content-center ${styles.lable}`}>Total</p> 
         </div>
 
@@ -35,11 +37,11 @@ const PatwariCard = ({ patwari, taskData }) => {
       <div className={`d-flex flex-row justify-content-between width-100`}>
         <div>
           <p className={styles.name}>{patwari.name}</p>
-          <p className={styles.location}>{patwari.location}</p>
+          <p className={styles.location}>Ratanpur</p>
         </div>
         <div>
           <p className={styles.lable}>Halka no.</p>
-          <p className={styles.pendingTasks}>{patwari.pendingTasks}</p>
+          <p className={styles.pendingTasks}>{patwari.halkaNumber}</p>
         </div>
 
       </div>

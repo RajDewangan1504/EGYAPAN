@@ -12,6 +12,31 @@ export const muiTheme = createTheme({
     }
 })
 
+export const convertISOtoDate = (dateString) => {
+    const date = new Date('2024-09-22T04:57:00.234Z');
+    function getOrdinalSuffix(day) {
+        if (day > 3 && day < 21) return 'th'; 
+        switch (day % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    }
+
+    const day = date.getUTCDate();
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getUTCFullYear();
+    // const hours = date.getUTCHours() % 12 || 12; // For 12-hour format
+    // const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    // const ampm = date.getUTCHours() >= 12 ? 'PM' : 'AM';
+
+   
+    return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+
+  
+}
+
 export const convertDateToTimestamp = (dateTimeString) => {
     const dateObject = new Date(dateTimeString);
 
