@@ -155,42 +155,41 @@ const CreateGyapan = ({ open, setOpen }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-
-        if(!validateForm()){
+    
+        if (!validateForm()) {
             return;
         }
-
+    
         setLoading(true);
-        const date = convertDateToTimestamp(formData.deadline);
-        const dataToSend = {
-            ...formData,
-            deadline: date
-        }
-
-        if (selectedFile) {
-            try {
-                const result = await uploadFile(selectedFile);
-                console.log(result);
-
-                setFormData({
-                    ...formData,
-                    attachment: result.Location
-                });
-                
-            } catch (error) {
-                console.error('File upload failed:', error);
-                setLoading(false);
-            }
-        }
-
-
+    
         try {
-            console.log("formdata", dataToSend);
+            let attachmentUrl = formData.attachment; 
+    
+            
+            if (selectedFile) {
+                const result = await uploadFile(selectedFile);
+                console.log('File uploaded successfully:', result);
+    
+                attachmentUrl = result.Location; 
+            }
+    
+          
+            const date = convertDateToTimestamp(formData.deadline);
+            const dataToSend = {
+                ...formData,
+                deadline: date,
+                attachment: attachmentUrl, 
+            };
+    
+            console.log("Submitting form data", dataToSend);
+    
+            
             const response = await createGyapan(dataToSend, auth.token);
-
+    
             if (response.success) {
-                setLoading(false);
                 console.log('Gyapan created successfully:', response.data);
+                
+                
                 setFormData({
                     tehsil: '',
                     deadline: '',
@@ -201,19 +200,20 @@ const CreateGyapan = ({ open, setOpen }) => {
                     village: '',
                     attachment: '',
                     remark: ''
-                })
-
+                });
                 setSelectedFile(null);
-
                 setOpen(false);
             } else {
-                console.error('Failed to create gyapan:', response.message);
+                setError('Failed to create gyapan: ' + response.message);
             }
         } catch (error) {
-            console.error('An error occurred while creating gyapan:', error);
+            console.error('Error during form submission:', error);
+            setError('An error occurred while creating gyapan.');
+        } finally {
             setLoading(false);
         }
     };
+    
 
     return (
         <CustomPopup
@@ -251,6 +251,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                         label={"मामला क्रमांक"}
                         type={"text"}
                         name="caseId"
+                        className={styles.input}
                         value={formData.caseId}
                         onChange={handleChange}
                         placeholder={"मामला क्रमांक"}
@@ -264,6 +265,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                         value={formData.category}
                         onChange={handleChange}
                         name="category"
+                        
                     />
 
                     <CustomSelect
