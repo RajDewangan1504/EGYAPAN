@@ -13,7 +13,8 @@ export const muiTheme = createTheme({
 })
 
 export const convertISOtoDate = (dateString) => {
-    const date = new Date('2024-09-22T04:57:00.234Z');
+    // const date = new Date('2024-09-22T04:57:00.234Z');
+    const date = new Date(dateString);
     function getOrdinalSuffix(day) {
         if (day > 3 && day < 21) return 'th'; 
         switch (day % 10) {

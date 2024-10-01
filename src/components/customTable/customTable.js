@@ -25,6 +25,7 @@ export default function CustomTable({
       display: 'grid',
       minWidth: '900px',
       gridTemplateColumns: gridWidth,
+      margin: '0px 15px'
       // gap: '4px'
     }
   };

@@ -19,6 +19,7 @@ const CustomSelect = ({ label, options, value, onChange, name, error, disabled, 
                         className={styles.selectEmpty}
                         fullWidth
                         displayEmpty
+                        style={{color:'#0005'}}
                     >
 
                         <MenuItem value="" disabled>

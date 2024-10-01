@@ -51,35 +51,55 @@ const GyapanTable = () => {
         const villageName = dataItem?.village.name?.toLowerCase() || '';
         const gyapanId = dataItem?.gyapanId?.toString() || '';
         const caseId = dataItem?.caseId?.toString() || '';
-    
+
         return (
-          patwariName.includes(searchTerm.toLowerCase()) ||
-          villageName.includes(searchTerm.toLowerCase()) ||
-          gyapanId.includes(searchTerm) ||
-          caseId.includes(searchTerm)
+            patwariName.includes(searchTerm.toLowerCase()) ||
+            villageName.includes(searchTerm.toLowerCase()) ||
+            gyapanId.includes(searchTerm) ||
+            caseId.includes(searchTerm)
         );
-      });
-    
+    });
 
 
-
+    const currentDate = new Date();
+    // console.log("current date", currentDate);
+    let isDeadlineMissed = "";
     const tableData = filteredGyapans.map((dataItem, index) =>
+
         keys.map((item, i) => {
+            isDeadlineMissed = new Date(dataItem.deadline) < currentDate && !dataItem.prativedan;
             if (item === 'index') {
-                return (index + 1);
+                
+                // console.log("isdeadline and index", isDeadlineMissed, index + 1);
+
+                return (<div
+                    key={i}
+                    style={{
+                        width: '100% ',
+                        height: '50px',
+                        borderLeft: isDeadlineMissed ? '5px solid red' : 'none', // Apply left border if deadline missed
+                        paddingLeft: '10px', // Add some padding to separate from text
+                        alignItems: 'center',
+                        display: 'flex',
+                        borderRadius : '5px'
+                    }}
+                >
+                    {index + 1}
+                </div>);
             }
             if (item === 'name') {
                 return (
                     <div key={i} style={{ width: "100%" }}>
                         <CustomTypo>{dataItem?.patwari.name}</CustomTypo>
-                        <CustomTypo sx={{ color: "#0008" }}>(Vill. {dataItem?.village.name})</CustomTypo>
+                        <CustomTypo sx={{ color: "#0008", fontSize: '14px' }}>(Vill. {dataItem?.village.name})</CustomTypo>
                     </div>
                 )
             }
             if (item === 'details') {
                 return (
                     <div key={i} style={{ width: "100%" }}>
-                        <CustomTypo>Gyapan Id : {dataItem?.gyapanId}</CustomTypo>
+                        <CustomTypo>Gyapan Id : {dataItem?.gyapanId}
+                        </CustomTypo>
                         <CustomTypo >Case Id : {dataItem?.caseId}</CustomTypo>
                     </div>
                 )
@@ -97,20 +117,27 @@ const GyapanTable = () => {
                     <div style={{ width: "100%" }}>
                         {/* <CustomButton text={"View PDF"} variant='contained'
                             onClick={() => downloadPDF(dataItem?.attachment)} /> */}
-                        Not Available    
+                        Not Available
                     </div>
                 )
             }
-            if (item === "createdAt" || item === "deadline") {
+            if (item === "createdAt") {
                 return (
-                    <div style = {{width : "100%"}}>
-                        {convertISOtoDate(dataItem[item])}
+                    <div style={{ width: "100%" }}>
+                        {convertISOtoDate(dataItem.createdAt)}
+                    </div>
+                );
+            }
+            if (item === "deadline") {
+                return (
+                    <div style={{ width: "100%" }}>
+                        {convertISOtoDate(dataItem.deadline)}
                     </div>
                 );
             }
             if (item === "status") {
                 return (
-                    <div style = {{width : "100%" , textTransform : 'capitalize'}}>
+                    <div style={{ width: "100%", textTransform: 'capitalize' }}>
                         {dataItem[item]}
                     </div>
                 );
@@ -119,8 +146,9 @@ const GyapanTable = () => {
                 return dataItem[item] || ''
             }
         })
-    );
 
+    );
+    console.log("data items ", filteredGyapans);
 
     return (
         <div className = "mb-2">
