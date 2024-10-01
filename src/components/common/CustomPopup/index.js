@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-const CustomPopup = ({ open, setOpen, children }) => {
+const CustomPopup = ({ open, setOpen, children, maxWidth = "md" }) => {
 
     const handleClose = () => {
         setOpen(false);
@@ -17,7 +17,7 @@ const CustomPopup = ({ open, setOpen, children }) => {
 
         <Dialog
             fullWidth={true}
-            maxWidth={'md'}
+            maxWidth={maxWidth}
             open={open}
             className={styles.main}
             onClose={handleClose}

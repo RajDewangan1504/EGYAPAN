@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <div className={styles.main} >
-      <div className='d-flex flex-row align-items-center justify-content-between gap-7'>
+      <div className='d-flex flex-row align-items-center justify-content-between gap-3'>
         <LogoComp />
         <h2 className={styles.page}>{getPageTitle()}</h2>
 

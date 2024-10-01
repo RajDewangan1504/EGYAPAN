@@ -92,11 +92,11 @@ export default function PatwariTable() {
 
     return (
         <div className={styles.main}>
-            {loading &&
-                <Loading />}
+            
             <CustomTable
                 title={"Patwari"}
                 gridWidth={gridWidth}
+                loading = {loading}
                 headData={headData}
                 mainHeading={"Table Heading"}
                 rows={tableData}

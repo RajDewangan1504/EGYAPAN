@@ -48,7 +48,7 @@ export default function AddPatwariForm({ open, refresh, setOpen }) {
 
     return (
         // <div className={styles.main}>
-        <CustomPopup open={open} setOpen={setOpen} >
+        <CustomPopup open={open} setOpen={setOpen} maxWidth = "sm">
             <div className={styles.form}>
                 <CustomTypo fontWeight={500} fontSize={"1.5rem"}>Add Patwari</CustomTypo>
                 {loading &&

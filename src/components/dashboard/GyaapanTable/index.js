@@ -71,7 +71,6 @@ const GyapanTable = () => {
             if (item === 'index') {
                 
                 // console.log("isdeadline and index", isDeadlineMissed, index + 1);
-
                 return (<div
                     key={i}
                     style={{
