@@ -47,6 +47,32 @@ export const createGyapan = async (data, token) => {
     }
 };
 
+export const addVillage = async (data, token) => {
+    try {
+        const response = await fetch(`${SERVER_URL}village/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` 
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to create gyapan');
+        }
+        return result;
+    } catch (error) {
+        console.error('An error occurred while creating gyapan:', error);
+        throw error;
+    }
+};
+
+
+
+
 
 
 

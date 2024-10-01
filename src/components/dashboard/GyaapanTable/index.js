@@ -9,7 +9,7 @@ import { getGyapans } from '../../../services/ConstantServices';
 import Loading from '../../common/Loading'
 import { convertISOtoDate } from '../../Utils';
 
-const TaskTable = () => {
+const GyapanTable = () => {
 
     const auth = useSelector(state => state.authReducer.user);
 
@@ -123,13 +123,12 @@ const TaskTable = () => {
 
 
     return (
-        <div >
-            {loading &&
-                <Loading />}
+        <div className = "mb-2">
             <CustomTable
                 title={"All Gyaapan"}
                 gridWidth={gridWidth}
                 headData={headData}
+                loading = {loading}
                 mainHeading={"Table Heading"}
                 rows={tableData}
                 searchBar={{
@@ -146,4 +145,4 @@ const TaskTable = () => {
     );
 };
 
-export default TaskTable;
+export default GyapanTable;

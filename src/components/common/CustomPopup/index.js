@@ -28,7 +28,6 @@ const CustomPopup = ({ open, setOpen, children }) => {
             <DialogContent>
                 {children}
             </DialogContent>
-
         </Dialog>
     );
 };

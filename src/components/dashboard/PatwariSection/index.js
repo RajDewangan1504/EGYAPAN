@@ -3,6 +3,7 @@ import styles from './styles.module.css'
 import PatwariCard from '../PatwariCard';
 import { allPatwari } from '../../../services/ConstantServices';
 import { useSelector } from 'react-redux';
+import Shimmer from '../../shimmer';
 
 
 export default function PatwariSection() {
@@ -76,26 +77,44 @@ export default function PatwariSection() {
         }
     ];
 
+    const [loading, setLoading] = useState(false);
     const auth = useSelector(state => state.authReducer.user);
     const [data, setData] = useState();
     const getData = async () => {
+        setLoading(true);
         const res = await allPatwari(auth?.user._id, auth?.token);
         if (res.success) {
+
             setData(res.data);
         }
+        setLoading(false);
     }
 
     useEffect(() => {
         getData();
-    }, [])
+    }, []);
+
+
 
     return (
         <div>
-            <div className={`${styles.cardsContainer}`}>
-                {data && data.map((patwari, index) => (
-                    <PatwariCard key={index} patwari={patwari} taskData={patwariList[0].taskData} />
-                ))}
-            </div>
+            {loading ?
+                <div  className={`${styles.cardsContainer}`}>
+                    {([1, 2, 3, 4,5]).map((item, index) => {
+                        return (
+                            <div style = {{width : "300px"}}>
+                                <Shimmer instance={1} height={"350px"} />
+                            </div>
+                        )
+                    })}
+                </div>
+                :
+                <div className={`${styles.cardsContainer}`}>
+                    {data && data.map((patwari, index) => (
+                        <PatwariCard key={index} patwari={patwari} taskData={patwariList[0].taskData} />
+                    ))}
+                </div>
+            }
 
         </div>
     )

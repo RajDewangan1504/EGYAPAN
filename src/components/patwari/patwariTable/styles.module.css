@@ -4,6 +4,10 @@
 
 .addBtn{
     position: absolute;
+    
+    display: flex;
+    flex-direction: row;
+    gap : 1rem;
     top :1rem;
     right : 1rem;
 }

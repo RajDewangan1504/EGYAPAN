@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 import { getVillagesByHalka, getGyapanTypes, allPatwari } from '../../../services/ConstantServices';
 import Loading from '../../common/Loading';
 import { set } from 'date-fns';
+import AddVillage from '../addVillageForm';
+import AddVillageForm from '../addVillageForm';
 
 export default function PatwariTable() {
 
@@ -20,6 +22,8 @@ export default function PatwariTable() {
 
 
     const [openAddForm, setOpenAddForm] = useState(false);
+    const [openAddVillageForm, setOpenAddVillageForm] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const gridWidth = "0.5fr 1fr 1fr 1fr 1fr 1fr"
     const headData = ["No.", "Name", "Halka Number", "Phone Number", "Completed", "Pending"];
@@ -109,12 +113,24 @@ export default function PatwariTable() {
                     onClick={() => setOpenAddForm(true)}
                     startIcon={<FontAwesomeIcon icon="fa-solid fa-plus" fontSize={"10px"} />}
                 />
+
+                <CustomButton
+                    text={"Add Village"}
+                    onClick={() => setOpenAddVillageForm(true)}
+                    startIcon={<FontAwesomeIcon icon="fa-solid fa-plus" fontSize={"10px"} />}
+                />
             </div>
 
 
             <AddPatwariForm
                 open={openAddForm}
                 setOpen={setOpenAddForm}
+                refresh={getData}
+            />
+
+            <AddVillageForm 
+                open={openAddVillageForm}
+                setOpen={setOpenAddVillageForm}
                 refresh={getData}
             />
         </div>

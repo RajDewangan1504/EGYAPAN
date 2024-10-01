@@ -7,6 +7,7 @@ import style from './customTable.module.css';
 import CustomTypo from '../common/CustomTypo/CustomTypo';
 import CardWrap from '../common/CardWrap';
 import SearchBar from '../common/searchBar';
+import Shimmer from '../shimmer';
 
 export default function CustomTable({
   title,
@@ -110,44 +111,47 @@ export default function CustomTable({
             >
               <Tablehead />
 
-              {/* {loading && <SkeletonComponent height="60px" />} */}
-              <TableBody>
-                {rows.map((row, index1) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      // aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={index1}
-                      // selected={isItemSelected}
-                      style={styles.row}
-                    >
-                      {row.map((item, index) => {
-                        return (
-                          <div key={index} className={style.cellDiv}>
-                            {typeof item === 'string' ? (
-                              <>
-                                {/* <div style={{ width: '100%', paddingLeft: index === 0 ? 15 : 0 }}> */}
-                                <p className={style.cellText}>{item}</p>
-                                {/* </div> */}
-                                {/* </CustomTypo> */}
-                              </>
-                            ) : (
-                              <>{item}</>
-                            )}
-                          </div>
-                        );
-                      })}
+              {loading ?
+                <Shimmer instance={5} height="80px" />
+                :
+                <TableBody>
+                  {rows.map((row, index1) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        // aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={index1}
+                        // selected={isItemSelected}
+                        style={styles.row}
+                      >
+                        {row.map((item, index) => {
+                          return (
+                            <div key={index} className={style.cellDiv}>
+                              {typeof item === 'string' ? (
+                                <>
+                                  {/* <div style={{ width: '100%', paddingLeft: index === 0 ? 15 : 0 }}> */}
+                                  <p className={style.cellText}>{item}</p>
+                                  {/* </div> */}
+                                  {/* </CustomTypo> */}
+                                </>
+                              ) : (
+                                <>{item}</>
+                              )}
+                            </div>
+                          );
+                        })}
 
 
-                    </TableRow>
+                      </TableRow>
 
-                  );
-                })}
+                    );
+                  })}
 
-              </TableBody>
+                </TableBody>
+              }
             </Table>
           </TableContainer>
 
