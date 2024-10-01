@@ -1,0 +1,10 @@
+.main{
+    position: relative;
+    width : 70%;
+}
+
+.addBtn1{
+    position: absolute !important;
+    top :2rem;
+    right : 1rem;
+}

@@ -1,9 +1,7 @@
 .cardsContainer {
-    display: flex;
-    flex-direction: row; 
-    gap: 16px; 
-    overflow-x: auto; 
-    scrollbar-width: none; 
+    display : grid;
+    grid-template-columns: repeat(4,1fr);
+    gap : 1rem;
   }
   
   .cardsContainer::-webkit-scrollbar {

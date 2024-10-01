@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
+import styles from './styles.module.css'
 import CustomTypo from '../../common/CustomTypo/CustomTypo';
 import CustomButton from '../../common/CustomButton';
 import CustomTable from '../../customTable/customTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddPatwariForm from '../addpatwarifForm';
-import { getAllPatwari } from '../../../services/PatwariServices';
 import { useSelector } from 'react-redux';
-import { getVillagesByHalka, getGyapanTypes, allPatwari } from '../../../services/ConstantServices';
-import Loading from '../../common/Loading';
-import { set } from 'date-fns';
-import AddVillage from '../addVillageForm';
+import { getVillageById } from '../../../services/ConstantServices';
 import AddVillageForm from '../addVillageForm';
 
-export default function PatwariTable() {
+export default function VillageTable() {
 
 
     const [data, setData] = useState([]);
@@ -25,16 +21,17 @@ export default function PatwariTable() {
     const [openAddVillageForm, setOpenAddVillageForm] = useState(false);
 
     const [loading, setLoading] = useState(false);
-    const gridWidth = "0.5fr 1fr 1fr 1fr"
-    const headData = ["No.", "Name", "Halka Number", "Phone Number"];
+    const gridWidth = "0.5fr 0.5fr 0.5fr"
+    const headData = ["No.", "Name", "Halka Number"];
 
-    const keys = ["index", "name", "halkaNumber", "phoneNumber"]
+    const keys = ["index", "name", "halkaNumber"]
 
 
     const tableData = data.map((dataItem, index) =>
         keys.map((item, i) => {
             if (item === 'index') {
-                return (<div style ={{width : "100%"}}>{index + 1}</div>);
+                return (
+                    <div style={{ width: "100%" }}>{index + 1}</div>);
             }
             if (item === 'name') {
                 return (
@@ -51,18 +48,9 @@ export default function PatwariTable() {
                     </div>
                 )
             }
-            if (item === 'phoneNumber') {
-                return (
-                    <div key={i} style={{ width: "100%" }}>
-                        <CustomTypo>{dataItem?.phoneNumber}</CustomTypo>
-                    </div>
-                )
-            }
 
-
-           
             return dataItem[item] || ''
-            
+
         })
     );
 
@@ -70,7 +58,7 @@ export default function PatwariTable() {
 
     const getData = async () => {
         setLoading(true);
-        allPatwari(auth.user._id, auth.token).then(
+        getVillageById(auth.user._id, auth.token).then(
             res => {
                 if (res.success) {
                     setData(res.data);
@@ -92,11 +80,19 @@ export default function PatwariTable() {
 
     return (
         <div className={styles.main}>
-            
+
+            <div className={styles.addBtn1}>
+                <CustomButton
+                    text={"Add Village"}
+                    onClick={() => setOpenAddVillageForm(true)}
+                    startIcon={<FontAwesomeIcon icon="fa-solid fa-plus" fontSize={"10px"} />}
+                />
+            </div>
+
             <CustomTable
-                title={"Patwari"}
+                title={"Villages"}
                 gridWidth={gridWidth}
-                loading = {loading}
+                loading={loading}
                 headData={headData}
                 mainHeading={"Table Heading"}
                 rows={tableData}
@@ -107,22 +103,13 @@ export default function PatwariTable() {
                 }}
             />
 
-            <div className={styles.addBtn}>
-                <CustomButton
-                    text={"Add Patwari"}
-                    onClick={() => setOpenAddForm(true)}
-                    startIcon={<FontAwesomeIcon icon="fa-solid fa-plus" fontSize={"10px"} />}
-                />               
-            </div>
 
 
-            <AddPatwariForm
-                open={openAddForm}
-                setOpen={setOpenAddForm}
+            <AddVillageForm
+                open={openAddVillageForm}
+                setOpen={setOpenAddVillageForm}
                 refresh={getData}
             />
-
-            
         </div>
     );
 };

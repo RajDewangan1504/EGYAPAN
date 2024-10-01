@@ -4,6 +4,7 @@ import PatwariCard from '../PatwariCard';
 import { allPatwari } from '../../../services/ConstantServices';
 import { useSelector } from 'react-redux';
 import Shimmer from '../../shimmer';
+import { patwariAnalytics } from '../../../services/PatwariServices';
 
 
 export default function PatwariSection() {
@@ -82,9 +83,9 @@ export default function PatwariSection() {
     const [data, setData] = useState();
     const getData = async () => {
         setLoading(true);
-        const res = await allPatwari(auth?.user._id, auth?.token);
+        const res = await patwariAnalytics(auth?.user._id, auth?.token);
         if (res.success) {
-
+            console.log(res.data)
             setData(res.data);
         }
         setLoading(false);
@@ -94,15 +95,13 @@ export default function PatwariSection() {
         getData();
     }, []);
 
-
-
     return (
         <div>
             {loading ?
-                <div  className={`${styles.cardsContainer}`}>
-                    {([1, 2, 3, 4,5]).map((item, index) => {
+                <div className={`${styles.cardsContainer}`}>
+                    {([1, 2, 3, 4]).map((item, index) => {
                         return (
-                            <div style = {{width : "300px"}}>
+                            <div style={{ width: "300px" }}>
                                 <Shimmer instance={1} height={"350px"} />
                             </div>
                         )
@@ -111,7 +110,11 @@ export default function PatwariSection() {
                 :
                 <div className={`${styles.cardsContainer}`}>
                     {data && data.map((patwari, index) => (
-                        <PatwariCard key={index} patwari={patwari} taskData={patwariList[0].taskData} />
+                        <PatwariCard key={index} patwari={patwari} taskData={[
+                            { name: "Pending", value: patwari?.pending, color: "#FF4D4F" },  // from 'pending'
+                            { name: "Completed", value: patwari?.completed, color: "#00C49F" },  // from 'completed'
+                            { name: "After Deadline", value: patwari?.afterDeadline, color: "#FFBB28" }  // from 'afterDeadline'
+                        ]} />
                     ))}
                 </div>
             }

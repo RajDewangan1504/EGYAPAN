@@ -12,6 +12,12 @@ export const getVillagesByHalka = async(halkaNumber, token) => {
     return result;
 }
 
+export const getVillageById = async(tehsilId , token)=>{
+    const res = await fetch(`${SERVER_URL}village/getAll/${tehsilId}`);
+    const result = await res.json();
+    return result;
+}
+
 export const getGyapanTypes = async( token) => {
     const res = await fetch(`${SERVER_URL}category/getlist`);
     const result = await res.json();
