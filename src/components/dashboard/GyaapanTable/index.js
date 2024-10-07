@@ -64,12 +64,13 @@ const GyapanTable = () => {
     const currentDate = new Date();
     // console.log("current date", currentDate);
     let isDeadlineMissed = "";
+
     const tableData = filteredGyapans.map((dataItem, index) =>
 
         keys.map((item, i) => {
             isDeadlineMissed = new Date(dataItem.deadline) < currentDate && !dataItem.prativedan;
             if (item === 'index') {
-                
+
                 // console.log("isdeadline and index", isDeadlineMissed, index + 1);
                 return (<div
                     key={i}
@@ -80,7 +81,7 @@ const GyapanTable = () => {
                         paddingLeft: '10px', // Add some padding to separate from text
                         alignItems: 'center',
                         display: 'flex',
-                        borderRadius : '5px'
+                        borderRadius: '5px'
                     }}
                 >
                     {index + 1}
@@ -114,9 +115,15 @@ const GyapanTable = () => {
             if (item === "Prativedan") {
                 return (
                     <div style={{ width: "100%" }}>
-                        {/* <CustomButton text={"View PDF"} variant='contained'
-                            onClick={() => downloadPDF(dataItem?.attachment)} /> */}
-                        Not Available
+                        {dataItem?.prativedanUrl ? (
+                            <CustomButton
+                                text="View PDF"
+                                variant="contained"
+                                onClick={() => downloadPDF(dataItem?.prativedanUrl)}
+                            />
+                        ) : (
+                            "Not Available"
+                        )}
                     </div>
                 )
             }
@@ -150,12 +157,12 @@ const GyapanTable = () => {
     console.log("data items ", filteredGyapans);
 
     return (
-        <div className = "mb-2">
+        <div className="mb-2">
             <CustomTable
                 title={"All Gyaapan"}
                 gridWidth={gridWidth}
                 headData={headData}
-                loading = {loading}
+                loading={loading}
                 mainHeading={"Table Heading"}
                 rows={tableData}
                 searchBar={{
