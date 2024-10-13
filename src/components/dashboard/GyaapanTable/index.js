@@ -62,30 +62,39 @@ const GyapanTable = () => {
 
 
     const currentDate = new Date();
-    // console.log("current date", currentDate);
+    
     let isDeadlineMissed = "";
 
     const tableData = filteredGyapans.map((dataItem, index) =>
 
         keys.map((item, i) => {
-            isDeadlineMissed = new Date(dataItem.deadline) < currentDate && !dataItem.prativedan;
-            if (item === 'index') {
+            const isDeadlineMissed = new Date(dataItem.deadline) < currentDate && dataItem.status.toLowerCase() === "pending";  
+            const isSubmittedOnTime =  dataItem.status.toLowerCase() === "submitted";  
 
-                // console.log("isdeadline and index", isDeadlineMissed, index + 1);
-                return (<div
-                    key={i}
-                    style={{
-                        width: '100% ',
-                        height: '50px',
-                        borderLeft: isDeadlineMissed ? '5px solid red' : 'none', // Apply left border if deadline missed
-                        paddingLeft: '10px', // Add some padding to separate from text
-                        alignItems: 'center',
-                        display: 'flex',
-                        borderRadius: '5px'
-                    }}
-                >
-                    {index + 1}
-                </div>);
+            let borderColor = 'none';
+            if (isDeadlineMissed) {
+                borderColor = '5px solid red'; 
+            } else if (isSubmittedOnTime) {
+                borderColor = '5px solid green';  
+            }
+
+            if (item === 'index') {
+                return (
+                    <div
+                        key={i}
+                        style={{
+                            width: '100%',
+                            height: '50px',
+                            borderLeft: borderColor,  
+                            paddingLeft: '10px',
+                            alignItems: 'center',
+                            display: 'flex',
+                            borderRadius: '5px'
+                        }}
+                    >
+                        {index + 1}
+                    </div>
+                );
             }
             if (item === 'name') {
                 return (
