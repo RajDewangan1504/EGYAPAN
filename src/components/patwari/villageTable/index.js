@@ -31,7 +31,7 @@ export default function VillageTable() {
         keys.map((item, i) => {
             if (item === 'index') {
                 return (
-                    <div style={{ width: "100%" }}>{index + 1}</div>);
+                    <div style={{ width: "100%" }} className='ml-1'>{index + 1}</div>);
             }
             if (item === 'name') {
                 return (
@@ -43,7 +43,7 @@ export default function VillageTable() {
 
             if (item === 'halkaNumber') {
                 return (
-                    <div key={i} style={{ width: "100%" }}>
+                    <div key={i} style={{ width: "100%" }} className='d-flex ml-3'>
                         <CustomTypo>{dataItem?.halkaNumber}</CustomTypo>
                     </div>
                 )

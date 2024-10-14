@@ -6,11 +6,14 @@ import CustomTypo from '../common/CustomTypo/CustomTypo'
 import CustomButton from '../common/CustomButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CreateGyapan from '../dashboard/Creategyapan'
+import { useSelector } from 'react-redux';
 
 export default function Header() {
 
 
+  const auth = useSelector(state => state.authReducer.user);
   const [open, setOpen] = useState(false);
+  console.log("auth", auth);
 
   const location = useLocation();
 
@@ -35,9 +38,12 @@ export default function Header() {
 
       </div>
       <div className='d-flex align-items-center gap-2'>
-        <CustomTypo variant={"h3"} fontSize={"1rem"} fontWeight={"500"}>
-          Tehsil Ratanpur
-        </CustomTypo>
+        <div className='width-100'>
+          <CustomTypo variant={"h3"} fontSize={"1rem"} fontWeight={"500"}>
+            {auth.user.name} {auth.user.tehsil}
+          </CustomTypo>
+          
+        </div>
         <div>
           <CustomButton
             text={"Create"}

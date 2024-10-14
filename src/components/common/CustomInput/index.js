@@ -44,7 +44,7 @@ export default function CustomInput({
                 endAdornment={endIcon}
                 startAdornment={startIcon}
                 size="small"
-                style={{color:'#0005'}}
+                // style={{color:'#0005'}}
                 
                 
             />

@@ -1,70 +1,104 @@
-import React, { useState } from 'react'
-import CustomTypo from '../../common/CustomTypo/CustomTypo'
-import CardWrap from '../../common/CardWrap'
-import CustomInput from '../../common/CustomInput'
-import styles from './styles.module.css'
-import CustomButton from '../../common/CustomButton'
-import CustomPopup from '../../common/CustomPopup'
-import { addPatwari } from '../../../services/PatwariServices'
-import { useSelector } from 'react-redux'
-import Loading from '../../common/Loading'
-export default function AddPatwariForm({ open, refresh, setOpen }) {
+import React, { useState } from 'react';
+import CustomTypo from '../../common/CustomTypo/CustomTypo';
+import CustomInput from '../../common/CustomInput';
+import CustomButton from '../../common/CustomButton';
+import CustomPopup from '../../common/CustomPopup';
+import { addPatwari } from '../../../services/PatwariServices';
+import { useSelector } from 'react-redux';
+import Loading from '../../common/Loading';
+import styles from './styles.module.css';
 
+export default function AddPatwariForm({ open, refresh, setOpen }) {
     const auth = useSelector(state => state.authReducer.user);
     const [data, setData] = useState({
         name: "",
-        halkaNumber: null,
         phoneNumber: "",
         tehsil: auth.user._id
-    })
+    });
+    const [halkaNumbers, setHalkaNumbers] = useState([{ value: "" }]);  // Array of halkaNumbers
     const [error, setError] = useState("");
-
     const [loading, setLoading] = useState(false);
+
     const handleChange = (event) => {
-        setData({ ...data, [event.target.name]: event.target.value });
-    }
+        const { name, value } = event.target;
+
+        // If the input is for the phone number, restrict to 10 digits
+        if (name === "phoneNumber") {
+            if (/^\d{0,10}$/.test(value)) {  // Allow only digits and limit to 10
+                setData({ ...data, [name]: value });
+            }
+        } else {
+            setData({ ...data, [name]: value });
+        }
+    };
+
+    const handleHalkaNumberChange = (index, event) => {
+        const newHalkaNumbers = [...halkaNumbers];
+        newHalkaNumbers[index].value = event.target.value;
+        setHalkaNumbers(newHalkaNumbers);
+    };
+
+    const handleAddHalkaNumber = () => {
+        setHalkaNumbers([...halkaNumbers, { value: "" }]);  // Add a new halka number input
+    };
+
+    const handleRemoveHalkaNumber = (index) => {
+        const newHalkaNumbers = halkaNumbers.filter((_, i) => i !== index);  // Remove the halka number input
+        setHalkaNumbers(newHalkaNumbers);
+    };
 
     const handleSubmit = () => {
         setLoading(true);
         setError("");
-        addPatwari(data, auth.token).then(
+
+        // Phone number validation
+        if (!/^\d{10}$/.test(data.phoneNumber)) {
+            setLoading(false);
+            setError("Phone number must be exactly 10 digits.");
+            return;
+        }
+
+        // Ensure all halka numbers are valid (non-empty)
+        if (halkaNumbers.some(h => h.value.trim() === "")) {
+            setLoading(false);
+            setError("Please fill out all Halka Numbers.");
+            return;
+        }
+
+        const halkaNumberArray = halkaNumbers.map(h => h.value);  // Extract halkaNumber values
+
+        const dataToSend = {
+            ...data,
+            halkaNumbers: halkaNumberArray  // Send the array of halka numbers
+        };
+        console.log("dataToSend",dataToSend);
+
+        addPatwari(dataToSend, auth.token).then(
             res => {
                 setLoading(false);
-                console.log(res);
                 if (res.success) {
                     refresh();
                     setOpen(false);
-
-                }
-                else {
+                } else {
                     setError(res.message);
                 }
             }
         ).catch((error) => {
             setLoading(false);
-        })
-    }
-    console.log(data);
+            setError("Something went wrong");
+        });
+    };
 
     return (
-        // <div className={styles.main}>
-        <CustomPopup open={open} setOpen={setOpen} maxWidth = "sm">
+        <CustomPopup open={open} setOpen={setOpen} maxWidth="sm">
             <div className={styles.form}>
                 <CustomTypo fontWeight={500} fontSize={"1.5rem"}>Add Patwari</CustomTypo>
-                {loading &&
-                    <Loading />}
+                {loading && <Loading />}
+
                 <CustomInput
                     name={"name"}
                     placeholder={"Patwari Name"}
                     label={"Patwari Name"}
-
-                    onChange={handleChange}
-                />
-
-                <CustomInput
-                    name={"halkaNumber"}
-                    placeholder={"Halka Number"}
-                    label={"Halka Number"}
                     onChange={handleChange}
                 />
 
@@ -72,12 +106,42 @@ export default function AddPatwariForm({ open, refresh, setOpen }) {
                     name={"phoneNumber"}
                     placeholder={"Phone Number"}
                     label={"Phone Number"}
+                    value={data.phoneNumber}
                     onChange={handleChange}
                 />
 
-                {error &&
-                    <CustomTypo fontSize={"14px"}>{error}</CustomTypo>
-                }
+                {/* Dynamic Inputs for Halka Numbers */}
+                {halkaNumbers.map((halka, index) => (
+                    <div key={index} className={`gap-2 ${styles.halkaNumberRow}`}>
+                        <CustomInput
+                            name={`halkaNumber-${index}`}
+                            placeholder={`Halka Number ${index + 1}`}
+                            label={`Halka Number ${index + 1}`}
+                            value={halka.value}
+                            onChange={(e) => handleHalkaNumberChange(index, e)}
+                        />
+                        <div className='pt-1'>
+                        {halkaNumbers.length > 1 && (
+                            <CustomButton
+                                onClick={() => handleRemoveHalkaNumber(index)}
+                                text={"Remove"}
+                                className='m-2'
+                                
+                           />
+                        )}
+                        </div>
+                    </div>
+                ))}
+
+                {/* Button to add more Halka Numbers */}
+                <CustomButton onClick={handleAddHalkaNumber} className={styles.addButton}
+                    text={"+ Add Another Halka Number"}
+
+                />
+
+
+
+                {error && <CustomTypo fontSize={"14px"}>{error}</CustomTypo>}
 
                 <div className='d-flex justify-content-end'>
                     <CustomButton
@@ -87,6 +151,5 @@ export default function AddPatwariForm({ open, refresh, setOpen }) {
                 </div>
             </div>
         </CustomPopup>
-        // </div>
-    )
+    );
 }

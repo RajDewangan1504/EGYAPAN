@@ -40,6 +40,7 @@ export default function AddVillageForm({ open, setOpen, refresh }) {
             }
             else{
                 setOpen(false);
+                refresh();
             }
         }).catch((_)=>{
             setLoading(false);
