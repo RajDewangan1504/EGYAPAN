@@ -79,6 +79,12 @@ export default function AddPatwariForm({ open, refresh, setOpen }) {
                 if (res.success) {
                     refresh();
                     setOpen(false);
+                    setData({
+                        name: "",
+                        phoneNumber: "",
+                        tehsil: auth.user._id
+                    });
+                    setHalkaNumbers([{ value: "" }]);
                 } else {
                     setError(res.message);
                 }
