@@ -87,7 +87,9 @@ const CreateGyapan = ({ open, setOpen }) => {
         const { name, value } = e.target;
         if (name === 'patwari') {
             const selectedPatwari = patwariName.find(patwari => patwari.value === value);
-            const halkaNumber = selectedPatwari ? selectedPatwari.halkaNumber : '';
+            const halkaNumber = selectedPatwari ? selectedPatwari.value : '';
+
+            // console.log("patwari details",selectedPatwari);
 
             setFormData({
                 ...formData,

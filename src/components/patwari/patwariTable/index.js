@@ -32,9 +32,11 @@ export default function PatwariTable() {
 
 
     const tableData = data.map((dataItem, index) =>
+        
         keys.map((item, i) => {
+            console.log("halkanumber ",dataItem.halkaNumber);
             if (item === 'index') {
-                return (<div style ={{width : "100%"}}>{index + 1}</div>);
+                return (<div style ={{width : "100%"}} className='ml-1'>{index + 1}</div>);
             }
             if (item === 'name') {
                 return (
@@ -46,14 +48,14 @@ export default function PatwariTable() {
 
             if (item === 'halkaNumber') {
                 return (
-                    <div key={i} style={{ width: "100%" }}>
-                        <CustomTypo>{dataItem?.halkaNumber}</CustomTypo>
+                    <div key={i} style={{ width: "100%" }} className='ml-2'>
+                        <CustomTypo>{Array.isArray(dataItem?.halkaNumber) ? dataItem.halkaNumber.join(', ') : dataItem.halkaNumber}</CustomTypo>
                     </div>
                 )
             }
             if (item === 'phoneNumber') {
                 return (
-                    <div key={i} style={{ width: "100%" }}>
+                    <div key={i} style={{ width: "100%" }} className='ml-2'>
                         <CustomTypo>{dataItem?.phoneNumber}</CustomTypo>
                     </div>
                 )

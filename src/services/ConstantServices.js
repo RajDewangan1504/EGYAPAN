@@ -6,8 +6,8 @@ export const allPatwari = async(id, token) => {
     return result;
 }
 
-export const getVillagesByHalka = async(halkaNumber, token) => {
-    const res = await fetch(`${SERVER_URL}village/getlist/${halkaNumber}`);
+export const getVillagesByHalka = async(id, token) => {
+    const res = await fetch(`${SERVER_URL}village/getlist/${id}`);
     const result = await res.json();
     return result;
 }
