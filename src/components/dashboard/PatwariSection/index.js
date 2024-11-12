@@ -101,7 +101,7 @@ export default function PatwariSection() {
                 <div className={`${styles.cardsContainer}`}>
                     {([1, 2, 3, 4]).map((item, index) => {
                         return (
-                            <div style={{ width: "300px" }}>
+                            <div className={styles.cardWrapper} >
                                 <Shimmer instance={1} height={"350px"} />
                             </div>
                         )

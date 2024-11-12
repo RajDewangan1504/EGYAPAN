@@ -1,11 +1,13 @@
 .card {
+  flex: 1 1 calc(25% - 10px); 
   width: 100%;
-  
-  padding: 25px;
+  padding: 20px;
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); 
-  margin: 10px 5px;
+  /* margin: 10px 5px; */
+  min-width: 290px;         
+  scroll-snap-align: start;
   
 }
 
@@ -49,4 +51,22 @@
   color: rgba(146, 146, 146, 0.7);
   font-weight: bold;
   margin-bottom: 4px;
+}
+
+@media screen and (max-width : 750px){
+
+.card {
+  flex: 1 1 calc(25% - 10px); 
+  width: 100%;
+  /* padding: 20px; */
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); 
+  margin:  5px;
+  min-width: 355px;  
+         
+  scroll-snap-align: start;
+  
+}
+
 }

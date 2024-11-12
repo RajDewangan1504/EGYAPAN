@@ -76,16 +76,21 @@ export default function CustomTable({
           )}
         </div> */}
 
-        <div className='d-flex gap-3 mb-1 mt-1'>
+       <div className={`d-flex gap-3 mb-1 mt-1  ${style.table}`}>
+       <div >
           {title &&
-            <CustomTypo variant={"h3"} className="pl-1" fontSize={"24px"} fontWeight={500}>{title}</CustomTypo>
+            <CustomTypo variant={"h3"} className={`pl-1 `} fontSize={"24px"} fontWeight={500}>{title}</CustomTypo>
           }
+        </div>
+        <div>
           {searchBar &&
             <SearchBar
+              className={style.table}
               placeholder={searchBar.placeholder}
               onChange={searchBar.onChange}></SearchBar>
           }
         </div>
+       </div>
 
 
         <Box className={style.tableBox}>

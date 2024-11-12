@@ -1,11 +1,10 @@
 
 .sidebar {
     width: 15rem; 
-    /* width: fit-content; */
     background-color: #fff;
    
     box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.05);
-    /* position: static; */
+  
     padding: 1.25rem; 
     min-height: 100%;
   }
@@ -73,6 +72,15 @@
     background-color: #e5e7eb;
     font-weight: bold;
     color: #4a4a4a;
+  }
+
+  @media screen and (max-width : 750px){
+    .sidebar {
+      width: 0px;
+      display: none;
+      padding: 0px;
+    }
+  
   }
   
   

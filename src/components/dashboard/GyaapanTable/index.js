@@ -163,6 +163,8 @@ const GyapanTable = () => {
         })
 
     );
+
+   
     console.log("data items ", filteredGyapans);
 
     return (

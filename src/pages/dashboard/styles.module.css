@@ -2,6 +2,7 @@
     padding: 1.5rem;
     /* background-color: #f9f9f9; */
     box-sizing: border-box;
+    /* width: 100%; */
   }
   
   .header {
@@ -151,6 +152,16 @@
   .activeTab {
     font-weight: bold;
     color: #4A3AFF; 
+  }
+
+  @media screen and (max-width : 750px){
+    .dashboardContainer {
+      padding: 1rem;
+      /* width: 50%; */
+      overflow: hidden;
+      
+    }
+  
   }
 
 
