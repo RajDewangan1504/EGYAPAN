@@ -17,7 +17,7 @@ export const uploadFile = (file) => {
         Key: file.name,
         Body: file,
         ContentDisposition: 'inline',
-        ContentType: 'application/pdf'
+        ContentType: file.type
     };
 
     return new Promise((resolve, reject) => {
