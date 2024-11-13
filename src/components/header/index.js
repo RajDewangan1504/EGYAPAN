@@ -7,13 +7,22 @@ import CustomButton from '../common/CustomButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CreateGyapan from '../dashboard/Creategyapan'
 import { useSelector } from 'react-redux';
+import Drawer from '../common/CustomDrawer/index';
+import TemporaryDrawer from '../common/CustomDrawer/index';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header() {
 
-
+  const drawerItems = ['Inbox', 'Starred', 'Send email', 'Drafts'];
+  const secondaryItems = ['All mail', 'Trash', 'Spam'];
   const auth = useSelector(state => state.authReducer.user);
   const [open, setOpen] = useState(false);
   console.log("auth", auth);
+
+  const [opendrawer, setOpendrawer] = React.useState(false);
+
+
 
   const location = useLocation();
 
@@ -30,19 +39,29 @@ export default function Header() {
     }
   };
 
+
   return (
     <div className={styles.main} >
-      <div className='d-flex flex-row align-items-center justify-content-between gap-3'>
+      {/* <Drawer drawerItems={drawerItems} secondaryItems={secondaryItems} logo={LogoComp}/> */}
+      <div className={`d-flex flex-row align-items-center justify-content-between gap-3`} >
+        <FontAwesomeIcon icon={faBars} className={`ml-1 ${styles.menuIcon}`} fontSize={"2em"} onClick={() => setOpendrawer(true)} />
         <LogoComp />
+
         <h2 className={styles.page}>{getPageTitle()}</h2>
 
       </div>
+
+
+      <TemporaryDrawer setOpen={setOpendrawer} open={opendrawer} />
+
       <div className='d-flex align-items-center gap-2'>
-        <div className='width-100'>
+        <div className={`width-100 ${styles.header}`}>
           <CustomTypo variant={"h3"} fontSize={"1rem"} fontWeight={"500"}>
-            {auth?.user.name} {auth?.user.tehsil}
+
+            {auth?.user?.name} {auth?.user?.tehsil}
+
           </CustomTypo>
-          
+
         </div>
         <div>
           <CustomButton

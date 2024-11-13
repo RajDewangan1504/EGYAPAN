@@ -61,3 +61,15 @@
     /* align-self: center !important;    */
     /* text-align: center !important; */
 }
+.table{
+    /* display: none; */
+    flex-direction: row;
+}
+
+@media screen and (max-width : 750px){
+    
+
+    .table{
+       flex-direction: column;
+    }
+}

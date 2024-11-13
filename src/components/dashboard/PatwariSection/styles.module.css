@@ -1,10 +1,21 @@
 .cardsContainer {
-    display : grid;
-    grid-template-columns: repeat(4,1fr);
-    gap : 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
   }
   
   .cardsContainer::-webkit-scrollbar {
     display: none; 
   }
-  
+  .cardWrapper {
+    width: 300px;
+  }
+
+  @media screen and (max-width : 750px){
+    .cardWrapper {
+      width: 100%;
+    }
+  }

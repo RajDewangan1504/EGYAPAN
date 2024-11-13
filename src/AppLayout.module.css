@@ -1,0 +1,71 @@
+/* AppLayout.module.css */
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.headerContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.mainContent {
+    display: flex;
+    height: 100%;
+}
+
+.sidebarContainer {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    height: calc(100vh - 64px);
+    width: 250px;
+}
+
+.contentArea {
+    margin-left: 250px;
+    width: 100%;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.contentNoSidebar {
+    margin-left: 0;
+    width: 100%;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.mainWithSidebar {
+    margin-top: 64px;
+}
+
+.mainWithoutSidebar {
+    margin-top: 0;
+}
+
+@media screen and (max-width : 750px){
+    .contentArea {
+        margin-left: 0px;
+        width: 100%;
+        overflow-y: auto;
+        padding: 20px 0px;
+    }
+    .contentNoSidebar {
+        margin-left: 0;
+        width: 100%;
+        overflow-y: auto;
+        padding: 20px;
+    }
+    .sidebarContainer{
+        display: none;
+    }
+  
+  }

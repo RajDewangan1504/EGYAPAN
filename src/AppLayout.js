@@ -4,6 +4,8 @@ import Header from "./components/header";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { logout } from "./actions/auth"; // Import the logout action
+import styles from "./AppLayout.module.css";
+import Drawer from "./components/common/CustomDrawer"
 
 export function AppLayout({ children }) {
     const location = useLocation();
@@ -25,19 +27,20 @@ export function AppLayout({ children }) {
     const showSidebar = location.pathname !== '/login';
 
     return (
-        <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: 'column',overflow: "hidden" }}>
+        <div className={styles.container}>
             {showSidebar && (
-                <div style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 1 }}>
+                <div className={styles.headerContainer}>
                     <Header onLogout={handleLogout} />
                 </div>
             )}
-            <div style={{ display: "flex", height: "100%", marginTop: showSidebar ? "64px" : "0" }}>
+            <div className={`${styles.mainContent} ${showSidebar ? styles.mainWithSidebar : styles.mainWithoutSidebar}`}>
                 {showSidebar && (
-                    <div style={{ position: "fixed", top: "64px", left: 0, height: "calc(100vh - 64px)", width: "250px" }}>
+                    <div className={styles.sidebarContainer}>
                         <Sidebar />
                     </div>
                 )}
-                <div style={{ marginLeft: showSidebar ? "250px" : "0", width: "100%", overflowY: "auto", padding: "20px" }}>
+                <Drawer/>
+                <div className={showSidebar ? styles.contentArea : styles.contentNoSidebar}>
                     {children}
                 </div>
             </div>
