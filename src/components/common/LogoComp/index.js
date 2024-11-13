@@ -5,7 +5,10 @@ import CustomTypo from '../CustomTypo/CustomTypo'
 export default function LogoComp() {
     return (
         <div className={styles.container}>
-            <img src={"assets/logo/logo.svg"} className={styles.main} />
+            <div className={styles.logo}>
+                <img src={"assets/logo/logo.svg"} className={styles.main} />
+            </div>
+
             <CustomTypo className={styles.logoText}>E-Gyapan</CustomTypo>
         </div>
 

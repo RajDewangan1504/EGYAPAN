@@ -3,7 +3,7 @@
     object-fit: cover;
 }
 
-.container{
+.container , .logo{
     padding : 1rem;
     height : 100px;
     display: flex;
@@ -16,4 +16,11 @@
     font-weight: 600 !important;
     font-size: 20px !important;
     color : var(--primary)
+}
+
+
+@media screen and (max-width : 750px){
+    .logo{
+        display: none;
+    }
 }

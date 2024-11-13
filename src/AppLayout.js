@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { logout } from "./actions/auth"; // Import the logout action
 import styles from "./AppLayout.module.css";
+import Drawer from "./components/common/CustomDrawer"
 
 export function AppLayout({ children }) {
     const location = useLocation();
@@ -38,6 +39,7 @@ export function AppLayout({ children }) {
                         <Sidebar />
                     </div>
                 )}
+                <Drawer/>
                 <div className={showSidebar ? styles.contentArea : styles.contentNoSidebar}>
                     {children}
                 </div>

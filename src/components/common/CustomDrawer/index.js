@@ -7,34 +7,27 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Sidebar from '../../sideBar/Sidebar';
 
-export default function TemporaryDrawer({ drawerItems, secondaryItems }) {
-  const [open, setOpen] = React.useState(false);
+export default function TemporaryDrawer({setOpen,open}) {
+  // const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+  // const toggleDrawer = (newOpen) => () => {
+  //   setOpen(newOpen);
+  // };
 
-  const DrawerList = (items) => (
-    <List>
-      {items.map((text) => (
-        <ListItem key={text} disablePadding>
-          <ListItemButton>
-            <ListItemText primary={text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-  );
+ 
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-          {DrawerList(drawerItems)}
-          <Divider />
-          {DrawerList(secondaryItems)}
+    <div >
+      {/* <Button onClick={toggleDrawer(true)}>Open drawer</Button> */}
+      <Drawer open={open} onClose={() => setOpen(false)}>
+        <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpen(false)}>
+        <div className='d-flex flex-1'>
+
+        {/* <p>hello</p> */}
+          <Sidebar/>
+          </div>
         </Box>
       </Drawer>
     </div>

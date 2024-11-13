@@ -64,5 +64,8 @@
         overflow-y: auto;
         padding: 20px;
     }
+    .sidebarContainer{
+        display: none;
+    }
   
   }

@@ -74,14 +74,14 @@
     color: #4a4a4a;
   }
 
-  @media screen and (max-width : 750px){
+  /* @media screen and (max-width : 750px){
     .sidebar {
       width: 0px;
       display: none;
       padding: 0px;
     }
   
-  }
+  } */
   
   
   

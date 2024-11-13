@@ -99,7 +99,7 @@ export default function PatwariSection() {
         <div>
             {loading ?
                 <div className={`${styles.cardsContainer}`}>
-                    {([1, 2, 3, 4]).map((item, index) => {
+                    {([1, 2, 3]).map((item, index) => {
                         return (
                             <div className={styles.cardWrapper} >
                                 <Shimmer instance={1} height={"350px"} />

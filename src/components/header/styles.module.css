@@ -12,6 +12,10 @@
     display: flex;
     text-align: start;
 }
+.menuIcon{
+    display: none;
+    cursor: pointer;
+}
 @media screen and (max-width : 750px){
     .main{
         background-color: #fff;
@@ -29,5 +33,11 @@
     .page{
         display: none;
         
+    }
+    .logo{
+        display: none;
+    }
+    .menuIcon{
+        display: block;
     }
 }
