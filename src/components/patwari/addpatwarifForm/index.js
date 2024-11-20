@@ -91,7 +91,7 @@ export default function AddPatwariForm({ open, refresh, setOpen }) {
             }
         ).catch((error) => {
             setLoading(false);
-            setError("Something went wrong");
+            setError(error);
         });
     };
 

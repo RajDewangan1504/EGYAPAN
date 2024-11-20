@@ -12,6 +12,7 @@ import { createGyapan } from '../../../services/ConstantServices';
 import { convertDateToTimestamp } from '../../Utils';
 import Loading from '../../common/Loading'
 import CustomTypo from '../../common/CustomTypo/CustomTypo'
+import { refresh } from '@cloudinary/url-gen/qualifiers/artisticFilter';
 
 const CreateGyapan = ({ open, setOpen }) => {
     const auth = useSelector(state => state.authReducer.user);
@@ -28,7 +29,7 @@ const CreateGyapan = ({ open, setOpen }) => {
         remark: ''
     });
 
-
+const today = new Date().toISOString().split('T')[0];
 
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -122,7 +123,7 @@ const CreateGyapan = ({ open, setOpen }) => {
     };
 
     const validateForm = () => {
-        
+
         const requiredFields = [
             'tehsil',
             'deadline',
@@ -132,7 +133,7 @@ const CreateGyapan = ({ open, setOpen }) => {
             'patwari',
             'village',
         ];
-        
+
         requiredFields.forEach((field) => {
             if (!formData[field]) {
                 setError(`${field} required`);
@@ -140,7 +141,7 @@ const CreateGyapan = ({ open, setOpen }) => {
             }
         });
 
-        if(!selectedFile){
+        if (!selectedFile) {
             setError("Attachment Required.");
             return false;
         }
@@ -157,41 +158,41 @@ const CreateGyapan = ({ open, setOpen }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-    
+
         if (!validateForm()) {
             return;
         }
-    
+
         setLoading(true);
-    
+
         try {
-            let attachmentUrl = formData.attachment; 
-    
-            
+            let attachmentUrl = formData.attachment;
+
+
             if (selectedFile) {
                 const result = await uploadFile(selectedFile);
                 console.log('File uploaded successfully:', result);
-    
-                attachmentUrl = result.Location; 
+
+                attachmentUrl = result.Location;
             }
-    
-          
+
+
             const date = convertDateToTimestamp(formData.deadline);
             const dataToSend = {
                 ...formData,
                 deadline: date,
-                attachment: attachmentUrl, 
+                attachment: attachmentUrl,
             };
-    
+
             console.log("Submitting form data", dataToSend);
-    
-            
+
+
             const response = await createGyapan(dataToSend, auth.token);
-    
+
             if (response.success) {
                 console.log('Gyapan created successfully:', response.data);
-                
-                
+
+
                 setFormData({
                     tehsil: '',
                     deadline: '',
@@ -204,7 +205,9 @@ const CreateGyapan = ({ open, setOpen }) => {
                     remark: ''
                 });
                 setSelectedFile(null);
+                // refresh();
                 setOpen(false);
+                alert("ज्ञापन सफलतापूर्वक बन गया है।");
             } else {
                 setError('Failed to create gyapan: ' + response.message);
             }
@@ -215,7 +218,7 @@ const CreateGyapan = ({ open, setOpen }) => {
             setLoading(false);
         }
     };
-    
+
 
     return (
         <CustomPopup
@@ -230,12 +233,15 @@ const CreateGyapan = ({ open, setOpen }) => {
                     <CustomInput
                         label={"ज्ञापन की समय सीमा"}
                         onChange={handleChange}
-                        type={"datetime-local"}
+                        type={"date"}
                         name="deadline"
                         value={formData.deadline} // Display ISO date string
                         placeholder={"ज्ञापन की समय सीमा"}
                         color="#0005"
-                        startIcon={<FontAwesomeIcon icon={"fa-solid fa-calendar-days"} color='#0005' className='mr-05' />}
+                        startIcon={<FontAwesomeIcon icon={"fa-solid fa-calendar-days"} color='#808080' className='mr-05' />}
+                        inputProps={{
+                            min: today, // Prevents selection of past dates
+                        }}
                     />
 
                     <CustomInput
@@ -246,7 +252,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                         value={formData.gyapanId}
                         placeholder={"ज्ञापन ID"}
                         className={styles.input}
-                        startIcon={<FontAwesomeIcon icon="fa-regular fa-pen-to-square" color='#0005' className='mr-05' />}
+                        startIcon={<FontAwesomeIcon icon="fa-regular fa-pen-to-square" color='#808080' className='mr-05' />}
                     />
 
                     <CustomInput
@@ -257,7 +263,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                         value={formData.caseId}
                         onChange={handleChange}
                         placeholder={"मामला क्रमांक"}
-                        startIcon={<FontAwesomeIcon icon="fa-solid fa-keyboard" color='#0005' className='mr-05' />}
+                        startIcon={<FontAwesomeIcon icon="fa-solid fa-keyboard" color='#808080' className='mr-05' />}
                     />
 
                     <CustomSelect
@@ -267,7 +273,7 @@ const CreateGyapan = ({ open, setOpen }) => {
                         value={formData.category}
                         onChange={handleChange}
                         name="category"
-                        
+
                     />
 
                     <CustomSelect
@@ -296,9 +302,10 @@ const CreateGyapan = ({ open, setOpen }) => {
                         onChange={handleChange}
                         multiline
                         maxRows={4}
-                        maxRow={4}
-                        startIcon={<FontAwesomeIcon icon="fa-solid fa-message" color='#0005' className='mr-05' />}
                         placeholder={"टिप्पणी"}
+                        maxRow={4}
+                        startIcon={<FontAwesomeIcon icon="fa-solid fa-message" color='#808080' className='mr-05' />}
+
                     />
 
                     {error &&

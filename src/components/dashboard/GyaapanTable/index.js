@@ -45,6 +45,8 @@ const GyapanTable = () => {
             console.error('No PDF URL provided');
         }
     };
+   
+    
 
     const filteredGyapans = gyapans.filter(dataItem => {
         const patwariName = dataItem?.patwari.name?.toLowerCase() || '';
@@ -62,20 +64,20 @@ const GyapanTable = () => {
 
 
     const currentDate = new Date();
-    
+
     let isDeadlineMissed = "";
 
     const tableData = filteredGyapans.map((dataItem, index) =>
 
         keys.map((item, i) => {
-            const isDeadlineMissed = new Date(dataItem.deadline) < currentDate && dataItem.status.toLowerCase() === "pending";  
-            const isSubmittedOnTime =  dataItem.status.toLowerCase() === "submitted";  
+            const isDeadlineMissed = new Date(dataItem.deadline) < currentDate && dataItem.status.toLowerCase() === "pending";
+            const isSubmittedOnTime = dataItem.status.toLowerCase() === "submitted";
 
             let borderColor = 'none';
             if (isDeadlineMissed) {
-                borderColor = '5px solid red'; 
+                borderColor = '5px solid red';
             } else if (isSubmittedOnTime) {
-                borderColor = '5px solid green';  
+                borderColor = '5px solid green';
             }
 
             if (item === 'index') {
@@ -85,7 +87,7 @@ const GyapanTable = () => {
                         style={{
                             width: '100%',
                             height: '50px',
-                            borderLeft: borderColor,  
+                            borderLeft: borderColor,
                             paddingLeft: '10px',
                             alignItems: 'center',
                             display: 'flex',
@@ -119,6 +121,13 @@ const GyapanTable = () => {
                         <CustomButton text={"View PDF"} variant='contained'
                             onClick={() => downloadPDF(dataItem?.attachment)} />
                     </div>
+                    // {/* <div style={{ width: "100%" }}>
+                    //     <CustomButton
+                    //         text={"View PDF"}
+                    //         variant="contained"
+                    //         onClick={() => downloadFile(dataItem?.attachment)}
+                    //     />
+                    // </div> */}
                 )
             }
             if (item === "Prativedan") {
@@ -128,7 +137,7 @@ const GyapanTable = () => {
                             <CustomButton
                                 text="View PDF"
                                 variant="contained"
-                                onClick={() => downloadPDF(dataItem?.prativedanUrl)}
+                                onClick={() => downloadPDF(dataItem?.attachment)} 
                             />
                         ) : (
                             "Not Available"
@@ -164,7 +173,7 @@ const GyapanTable = () => {
 
     );
 
-   
+
     console.log("data items ", filteredGyapans);
 
     return (
