@@ -57,7 +57,9 @@ export default function Header() {
       <div className='d-flex align-items-center gap-2'>
         <div className={`width-100 ${styles.header}`}>
           <CustomTypo variant={"h3"} fontSize={"1rem"} fontWeight={"500"}>
+
             {auth?.user?.name} {auth?.user?.tehsil}
+
           </CustomTypo>
 
         </div>
