@@ -1,46 +1,71 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useSelector } from 'react-redux';
 import CustomTypo from '../../common/CustomTypo/CustomTypo';
 import CustomButton from '../../common/CustomButton';
 import CustomTable from '../../customTable/customTable';
 import { getGyapans } from '../../../services/ConstantServices';
-import Loading from '../../common/Loading'
+import Loading from '../../common/Loading';
 import { convertISOtoDate } from '../../Utils';
 
 const GyapanTable = ({ filter }) => {
-
     const auth = useSelector(state => state.authReducer.user);
-
-
     const [loading, setLoading] = useState(false);
-    const gridWidth = "0.2fr 0.5fr 0.5fr 0.5fr 0.3fr 0.5fr 0.5fr 0.5fr"
-    const headData = ["No.", "Patwari", "Details", "Date Sent", "Status", "Deadline", "Gyapan", "Prativedan"];
-    const keys = ["index", "name", "details", "createdAt", "status", "deadline", "Gyapan", "Prativedan"]
-    const [searchTerm, setSearchTerm] = useState('');
     const [gyapans, setGyapans] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const gridWidth = "0.2fr 0.5fr 0.5fr 0.5fr 0.3fr 0.5fr 0.5fr 0.5fr";
+    const headData = ["No.", "Patwari", "Details", "Date Sent", "Status", "Deadline", "Gyapan", "Prativedan"];
+    const keys = ["index", "name", "details", "createdAt", "status", "deadline", "Gyapan", "Prativedan"];
 
     const loadGyapans = async () => {
         setLoading(true);
         try {
             const res = await getGyapans(auth.user._id);
             setGyapans(res.data);
-            console.log("gyapans", res.data);
-            setLoading(false);
         } catch (error) {
             console.error('Failed to load Gyapans:', error);
+        } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        loadGyapans();
+        if (auth?.user?._id) {
+            loadGyapans();
+        }
     }, [auth.user._id]);
 
-    const refresh = () => {
-        loadGyapans();
-    };
+    // Combined filtering logic
+    const filteredGyapans = gyapans.filter(dataItem => {
+        const currentDate = new Date();
+        const deadlineDate = new Date(dataItem.deadline);
+        const patwariName = dataItem?.patwari.name?.toLowerCase() || '';
+        const villageName = dataItem?.village.name?.toLowerCase() || '';
+        const gyapanId = dataItem?.gyapanId?.toString() || '';
+        const caseId = dataItem?.caseId?.toString() || '';
+
+        // Check if the search term matches patwari name, village name, gyapan ID, or case ID
+        const searchMatch = (
+            patwariName.includes(searchTerm.toLowerCase()) ||
+            villageName.includes(searchTerm.toLowerCase()) ||
+            gyapanId.includes(searchTerm) ||
+            caseId.includes(searchTerm)
+        );
+
+        // Apply filter based on the 'filter' prop
+        if (filter === 'received') {
+            return dataItem.prativedanUrl && searchMatch;
+        }
+        if (filter === 'pending') {
+            return dataItem.status?.toLowerCase() === 'pending' && searchMatch;
+        }
+        if (filter === 'deadlineCrossed') {
+            return deadlineDate < currentDate && dataItem.status?.toLowerCase() === 'pending' && searchMatch;
+        }
+
+        return searchMatch; // Default case: no filter, only apply search
+    });
 
     const downloadPDF = (pdfUrl) => {
         if (pdfUrl) {
@@ -49,56 +74,15 @@ const GyapanTable = ({ filter }) => {
             console.error('No PDF URL provided');
         }
     };
-   
-    
-
-    // const filteredGyapans = gyapans.filter(dataItem => {
-    //     const patwariName = dataItem?.patwari.name?.toLowerCase() || '';
-    //     const villageName = dataItem?.village.name?.toLowerCase() || '';
-    //     const gyapanId = dataItem?.gyapanId?.toString() || '';
-    //     const caseId = dataItem?.caseId?.toString() || '';
-
-    //     return (
-    //         patwariName.includes(searchTerm.toLowerCase()) ||
-    //         villageName.includes(searchTerm.toLowerCase()) ||
-    //         gyapanId.includes(searchTerm) ||
-    //         caseId.includes(searchTerm)
-    //     );
-    // });
-
-
-    const currentDate = new Date();
-
-    let isDeadlineMissed = "";
-
-    const filteredGyapans = gyapans.filter((dataItem) => {
-        const currentDate = new Date();
-
-        if (filter === 'received') {
-            return dataItem.prativedanUrl;
-        }
-        if (filter === 'pending') {
-            return dataItem.status?.toLowerCase() === 'pending';
-        }
-        if (filter === 'deadlineCrossed') {
-            const deadlineDate = new Date(dataItem.deadline);
-            return deadlineDate < currentDate && dataItem.status?.toLowerCase() === 'pending';
-        }
-        return true; // Show all gyapans if 'all' or no filter is applied
-    });
 
     const tableData = filteredGyapans.map((dataItem, index) =>
-
         keys.map((item, i) => {
-            const isDeadlineMissed = new Date(dataItem.deadline) < currentDate && dataItem.status.toLowerCase() === "pending";
+            const isDeadlineMissed = new Date(dataItem.deadline) < new Date() && dataItem.status.toLowerCase() === "pending";
             const isSubmittedOnTime = dataItem.status.toLowerCase() === "submitted";
 
             let borderColor = 'none';
-            if (isDeadlineMissed) {
-                borderColor = '5px solid red';
-            } else if (isSubmittedOnTime) {
-                borderColor = '5px solid green';
-            }
+            if (isDeadlineMissed) borderColor = '5px solid red';
+            if (isSubmittedOnTime) borderColor = '5px solid green';
 
             if (item === 'index') {
                 return (
@@ -109,8 +93,8 @@ const GyapanTable = ({ filter }) => {
                             height: '50px',
                             borderLeft: borderColor,
                             paddingLeft: '10px',
-                            alignItems: 'center',
                             display: 'flex',
+                            alignItems: 'center',
                             borderRadius: '5px'
                         }}
                     >
@@ -124,95 +108,60 @@ const GyapanTable = ({ filter }) => {
                         <CustomTypo>{dataItem?.patwari.name}</CustomTypo>
                         <CustomTypo sx={{ color: "#0008", fontSize: '14px' }}>(Vill. {dataItem?.village.name})</CustomTypo>
                     </div>
-                )
+                );
             }
             if (item === 'details') {
                 return (
                     <div key={i} style={{ width: "100%" }}>
-                        <CustomTypo>Gyapan Id : {dataItem?.gyapanId}
-                        </CustomTypo>
-                        <CustomTypo >Case Id : {dataItem?.caseId}</CustomTypo>
+                        <CustomTypo>Gyapan Id : {dataItem?.gyapanId}</CustomTypo>
+                        <CustomTypo>Case Id : {dataItem?.caseId}</CustomTypo>
                     </div>
-                )
+                );
             }
             if (item === "Gyapan") {
                 return (
                     <div style={{ width: "100%" }}>
-                        <CustomButton text={"View PDF"} variant='contained'
-                            onClick={() => downloadPDF(dataItem?.attachment)} />
+                        <CustomButton text="View PDF" variant="contained" onClick={() => downloadPDF(dataItem?.attachment)} />
                     </div>
-                    // {/* <div style={{ width: "100%" }}>
-                    //     <CustomButton
-                    //         text={"View PDF"}
-                    //         variant="contained"
-                    //         onClick={() => downloadFile(dataItem?.attachment)}
-                    //     />
-                    // </div> */}
-                )
+                );
             }
             if (item === "Prativedan") {
                 return (
                     <div style={{ width: "100%" }}>
                         {dataItem?.prativedanUrl ? (
-                            <CustomButton
-                                text="View PDF"
-                                variant="contained"
-                                onClick={() => downloadPDF(dataItem?.attachment)} 
-                            />
+                            <CustomButton text="View PDF" variant="contained" onClick={() => downloadPDF(dataItem?.prativedanUrl)} />
                         ) : (
                             "Not Available"
                         )}
                     </div>
-                )
+                );
             }
             if (item === "createdAt") {
-                return (
-                    <div style={{ width: "100%" }}>
-                        {convertISOtoDate(dataItem.createdAt)}
-                    </div>
-                );
+                return <div style={{ width: "100%" }}>{convertISOtoDate(dataItem.createdAt)}</div>;
             }
             if (item === "deadline") {
-                return (
-                    <div style={{ width: "100%" }}>
-                        {convertISOtoDate(dataItem.deadline)}
-                    </div>
-                );
+                return <div style={{ width: "100%" }}>{convertISOtoDate(dataItem.deadline)}</div>;
             }
             if (item === "status") {
-                return (
-                    <div style={{ width: "100%", textTransform: 'capitalize' }}>
-                        {dataItem[item]}
-                    </div>
-                );
+                return <div style={{ width: "100%", textTransform: 'capitalize' }}>{dataItem[item]}</div>;
             }
-            else {
-                return dataItem[item] || ''
-            }
+            return dataItem[item] || '';
         })
-
     );
-
-
-    console.log("data items ", filteredGyapans);
 
     return (
         <div className="mb-2">
             <CustomTable
-                title={"All Gyapan"}
+                title="All Gyapan"
                 gridWidth={gridWidth}
                 headData={headData}
                 loading={loading}
-                mainHeading={"Table Heading"}
+                mainHeading="Table Heading"
                 rows={tableData}
                 searchBar={{
                     name: "",
                     placeholder: "Search",
-                    onChange: (e) => {
-                        const text = e.target.value;
-                        setSearchTerm(text);
-                    }
-
+                    onChange: (e) => setSearchTerm(e.target.value),
                 }}
             />
         </div>
