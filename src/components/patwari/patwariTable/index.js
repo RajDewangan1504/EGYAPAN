@@ -34,7 +34,7 @@ export default function PatwariTable() {
     const tableData = data.map((dataItem, index) =>
         
         keys.map((item, i) => {
-            console.log("halkanumber ",dataItem.halkaNumber);
+            // console.log("halkanumber ",dataItem.halkaNumber);
             if (item === 'index') {
                 return (<div style ={{width : "100%"}} className='ml-1'>{index + 1}</div>);
             }

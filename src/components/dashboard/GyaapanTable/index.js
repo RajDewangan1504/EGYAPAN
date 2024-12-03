@@ -9,7 +9,7 @@ import { getGyapans } from '../../../services/ConstantServices';
 import Loading from '../../common/Loading'
 import { convertISOtoDate } from '../../Utils';
 
-const GyapanTable = () => {
+const GyapanTable = ({ filter }) => {
 
     const auth = useSelector(state => state.authReducer.user);
 
@@ -38,6 +38,10 @@ const GyapanTable = () => {
         loadGyapans();
     }, [auth.user._id]);
 
+    const refresh = () => {
+        loadGyapans();
+    };
+
     const downloadPDF = (pdfUrl) => {
         if (pdfUrl) {
             window.open(pdfUrl, '_blank');
@@ -48,24 +52,40 @@ const GyapanTable = () => {
    
     
 
-    const filteredGyapans = gyapans.filter(dataItem => {
-        const patwariName = dataItem?.patwari.name?.toLowerCase() || '';
-        const villageName = dataItem?.village.name?.toLowerCase() || '';
-        const gyapanId = dataItem?.gyapanId?.toString() || '';
-        const caseId = dataItem?.caseId?.toString() || '';
+    // const filteredGyapans = gyapans.filter(dataItem => {
+    //     const patwariName = dataItem?.patwari.name?.toLowerCase() || '';
+    //     const villageName = dataItem?.village.name?.toLowerCase() || '';
+    //     const gyapanId = dataItem?.gyapanId?.toString() || '';
+    //     const caseId = dataItem?.caseId?.toString() || '';
 
-        return (
-            patwariName.includes(searchTerm.toLowerCase()) ||
-            villageName.includes(searchTerm.toLowerCase()) ||
-            gyapanId.includes(searchTerm) ||
-            caseId.includes(searchTerm)
-        );
-    });
+    //     return (
+    //         patwariName.includes(searchTerm.toLowerCase()) ||
+    //         villageName.includes(searchTerm.toLowerCase()) ||
+    //         gyapanId.includes(searchTerm) ||
+    //         caseId.includes(searchTerm)
+    //     );
+    // });
 
 
     const currentDate = new Date();
 
     let isDeadlineMissed = "";
+
+    const filteredGyapans = gyapans.filter((dataItem) => {
+        const currentDate = new Date();
+
+        if (filter === 'received') {
+            return dataItem.prativedanUrl;
+        }
+        if (filter === 'pending') {
+            return dataItem.status?.toLowerCase() === 'pending';
+        }
+        if (filter === 'deadlineCrossed') {
+            const deadlineDate = new Date(dataItem.deadline);
+            return deadlineDate < currentDate && dataItem.status?.toLowerCase() === 'pending';
+        }
+        return true; // Show all gyapans if 'all' or no filter is applied
+    });
 
     const tableData = filteredGyapans.map((dataItem, index) =>
 
@@ -179,7 +199,7 @@ const GyapanTable = () => {
     return (
         <div className="mb-2">
             <CustomTable
-                title={"All Gyaapan"}
+                title={"All Gyapan"}
                 gridWidth={gridWidth}
                 headData={headData}
                 loading={loading}

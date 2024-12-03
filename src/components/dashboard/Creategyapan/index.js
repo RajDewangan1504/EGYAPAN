@@ -14,7 +14,7 @@ import Loading from '../../common/Loading'
 import CustomTypo from '../../common/CustomTypo/CustomTypo'
 import { refresh } from '@cloudinary/url-gen/qualifiers/artisticFilter';
 
-const CreateGyapan = ({ open, setOpen }) => {
+const CreateGyapan = ({ open, setOpen,refresh }) => {
     const auth = useSelector(state => state.authReducer.user);
 
     const [formData, setFormData] = useState({
@@ -205,7 +205,7 @@ const today = new Date().toISOString().split('T')[0];
                     remark: ''
                 });
                 setSelectedFile(null);
-                // refresh();
+                refresh();
                 setOpen(false);
                 alert("ज्ञापन सफलतापूर्वक बन गया है।");
             } else {
@@ -218,6 +218,7 @@ const today = new Date().toISOString().split('T')[0];
             setLoading(false);
         }
     };
+    
 
 
     return (
