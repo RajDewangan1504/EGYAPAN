@@ -43,8 +43,8 @@ export default function Header() {
   return (
     <div className={styles.main} >
       {/* <Drawer drawerItems={drawerItems} secondaryItems={secondaryItems} logo={LogoComp}/> */}
-      <div className={`d-flex flex-row align-items-center justify-content-between gap-3`} >
-        <FontAwesomeIcon icon={faBars} className={`ml-1 ${styles.menuIcon}`} fontSize={"2em"} onClick={() => setOpendrawer(true)} />
+      <div className={`d-flex flex-row align-items-center justify-content-between gap-1`} >
+        <FontAwesomeIcon icon={faBars} className={` ${styles.menuIcon}`} fontSize={"2em"} onClick={() => setOpendrawer(true)} />
         <LogoComp />
 
         <h2 className={styles.page}>{getPageTitle()}</h2>
