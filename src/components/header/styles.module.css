@@ -17,6 +17,12 @@
     display: none;
     cursor: pointer;
 }
+.datepicker{
+   
+    display: flex;
+    flex-direction: row;
+    gap: 2;
+}
 @media screen and (max-width : 750px){
     .main{
         background-color: #fff;
@@ -40,5 +46,8 @@
     }
     .menuIcon{
         display: block;
+    }
+    .datepicker{
+        display: none;
     }
 }

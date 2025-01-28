@@ -41,7 +41,7 @@ export function AppLayout({ children }) {
                 )}
                 <Drawer/>
                 <div className={showSidebar ? styles.contentArea : styles.contentNoSidebar}>
-                    {children}
+                    {children }
                 </div>
             </div>
         </div>

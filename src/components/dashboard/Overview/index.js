@@ -2,17 +2,22 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { getGyapans } from '../../../services/ConstantServices';
 import { useSelector } from 'react-redux';
+import { useContext } from 'react';
+import { GyapanContext } from '../../../context/GyapanContext';
 
 const GyapanStats = ({ onStatClick }) => {
     const auth = useSelector(state => state.authReducer.user);
+    const { gyapans, setGyapans} = useContext(GyapanContext);
 
-    const [gyapans, setGyapans] = useState([]);  // Store fetched gyapans
+
+    // const [gyapans, setGyapans] = useState([]);  // Store fetched gyapans
     const [selectedStat, setSelectedStat] = useState(null); // Track selected stat box
 
     const loadGyapans = async () => {
         try {
             const res = await getGyapans(auth?.user?._id);
             setGyapans(res.data);
+            console.log(res);
         } catch (error) {
             console.error('Failed to load Gyapans:', error);
         }

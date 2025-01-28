@@ -26,7 +26,7 @@ export const uploadFile = (file) => {
                 console.error('There was an error uploading your file: ', err);
                 reject(err); 
             } else {
-                console.log('Successfully uploaded file.', data);
+                // console.log('Successfully uploaded file.', data);
                 resolve(data); 
             }
         });

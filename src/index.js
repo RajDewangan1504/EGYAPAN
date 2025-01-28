@@ -8,15 +8,18 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store'; 
 import { BrowserRouter } from 'react-router-dom';
+import { GyapanProvider } from './context/GyapanContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+      <GyapanProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
+        </GyapanProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext, } from 'react';
 import styles from './styles.module.css';
 import { useSelector } from 'react-redux';
 import CustomTypo from '../../common/CustomTypo/CustomTypo';
@@ -6,13 +6,19 @@ import CustomButton from '../../common/CustomButton';
 import CustomTable from '../../customTable/customTable';
 import { getGyapans } from '../../../services/ConstantServices';
 import Loading from '../../common/Loading';
+import { GyapanContext } from '../../../context/GyapanContext';
 import { convertISOtoDate } from '../../Utils';
+// import { RefreshContext } from "../../../context/GyapanContext";
 
 const GyapanTable = ({ filter }) => {
     const auth = useSelector(state => state.authReducer.user);
     const [loading, setLoading] = useState(false);
-    const [gyapans, setGyapans] = useState([]);
+    // const [gyapans, setGyapans] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    // const { refresh } = useContext(RefreshContext);;
+
+    const { gyapans, setGyapans} = useContext(GyapanContext);
+    console.log("gyapans",gyapans);
 
     const gridWidth = "0.2fr 0.5fr 0.5fr 0.5fr 0.3fr 0.5fr 0.5fr 0.5fr";
     const headData = ["No.", "Patwari", "Details", "Date Sent", "Status", "Deadline", "Gyapan", "Prativedan"];
@@ -67,11 +73,30 @@ const GyapanTable = ({ filter }) => {
         return searchMatch; // Default case: no filter, only apply search
     });
 
-    const downloadPDF = (pdfUrl) => {
-        if (pdfUrl) {
-            window.open(pdfUrl, '_blank');
+    // const downloadPDF = (pdfUrl) => {
+    //     if (pdfUrl) {
+    //         window.open(pdfUrl, '_blank');
+    //     } else {
+    //         console.error('No PDF URL provided');
+    //     }
+    // };
+    const downloadPDF = (url) => {
+        if (!url) {
+            console.error('No URL provided');
+            return;
+        }
+    
+        const isImage = /\.(jpg|jpeg|png|gif)$/i.test(url);
+        const isPDF = /\.pdf$/i.test(url);
+    
+        if (isImage) {
+            // Open image in a new tab
+            window.open(url, '_blank');
+        } else if (isPDF) {
+            // Open PDF in a new tab
+            window.open(url, '_blank');
         } else {
-            console.error('No PDF URL provided');
+            console.error('Unsupported file type:', url);
         }
     };
 

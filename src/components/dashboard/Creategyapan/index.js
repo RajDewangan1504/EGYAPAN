@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import CustomPopup from '../../common/CustomPopup';
 import styles from './styles.module.css';
 import CustomInput from '../../common/CustomInput';
@@ -12,10 +12,12 @@ import { createGyapan } from '../../../services/ConstantServices';
 import { convertDateToTimestamp } from '../../Utils';
 import Loading from '../../common/Loading'
 import CustomTypo from '../../common/CustomTypo/CustomTypo'
-import { refresh } from '@cloudinary/url-gen/qualifiers/artisticFilter';
+// import { refresh } from '@cloudinary/url-gen/qualifiers/artisticFilter';
+// import { RefreshContext } from "../../../context/GyapanContext";
 
 const CreateGyapan = ({ open, setOpen,refresh }) => {
     const auth = useSelector(state => state.authReducer.user);
+    // const { toggleRefresh } = useContext(RefreshContext);;
 
     const [formData, setFormData] = useState({
         tehsil: '',
@@ -205,7 +207,8 @@ const today = new Date().toISOString().split('T')[0];
                     remark: ''
                 });
                 setSelectedFile(null);
-                refresh();
+                // toggleRefresh();
+                window.location.reload();
                 setOpen(false);
                 alert("ज्ञापन सफलतापूर्वक बन गया है।");
             } else {
