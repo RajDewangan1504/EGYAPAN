@@ -18,7 +18,7 @@ const GyapanTable = ({ filter }) => {
     // const { refresh } = useContext(RefreshContext);;
 
     const { gyapans, setGyapans} = useContext(GyapanContext);
-    console.log("gyapans",gyapans);
+    // console.log("gyapans",gyapans);
 
     const gridWidth = "0.2fr 0.5fr 0.5fr 0.5fr 0.3fr 0.5fr 0.5fr 0.5fr";
     const headData = ["No.", "Patwari", "Details", "Date Sent", "Status", "Deadline", "Gyapan", "Prativedan"];

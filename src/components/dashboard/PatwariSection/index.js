@@ -85,7 +85,7 @@ export default function PatwariSection() {
         setLoading(true);
         const res = await patwariAnalytics(auth?.user._id, auth?.token);
         if (res.success) {
-            console.log(res.data)
+            // console.log(res.data)
             setData(res.data);
         }
         setLoading(false);

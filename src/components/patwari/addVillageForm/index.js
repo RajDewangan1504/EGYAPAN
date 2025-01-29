@@ -37,7 +37,7 @@ export default function AddVillageForm({ open, setOpen, refresh }) {
         }
 
         setLoading(true);
-        console.log(data_to_send);
+        // console.log(data_to_send);
         addVillage(data_to_send, auth?.token).then(res => {
             setLoading(false);
             if (!res.success) {

@@ -71,7 +71,7 @@ export default function AddPatwariForm({ open, refresh, setOpen }) {
             ...data,
             halkaNumbers: halkaNumberArray  // Send the array of halka numbers
         };
-        console.log("dataToSend",dataToSend);
+        // console.log("dataToSend",dataToSend);
 
         addPatwari(dataToSend, auth.token).then(
             res => {

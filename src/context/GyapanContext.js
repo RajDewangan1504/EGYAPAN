@@ -19,7 +19,7 @@ export const GyapanProvider = ({ children }) => {
             try {
                 const response = await getGyapans(auth?.user?._id); // Assuming this fetches all gyapans
                 setGyapans(response.data);
-                console.log("obj",response.data);
+                // console.log("obj",response.data);
             } catch (error) {
                 console.error('Error fetching gyapans:', error);
             } finally {

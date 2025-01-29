@@ -173,7 +173,7 @@ const today = new Date().toISOString().split('T')[0];
 
             if (selectedFile) {
                 const result = await uploadFile(selectedFile);
-                console.log('File uploaded successfully:', result);
+                // console.log('File uploaded successfully:', result);
 
                 attachmentUrl = result.Location;
             }
@@ -186,13 +186,13 @@ const today = new Date().toISOString().split('T')[0];
                 attachment: attachmentUrl,
             };
 
-            console.log("Submitting form data", dataToSend);
+            // console.log("Submitting form data", dataToSend);
 
 
             const response = await createGyapan(dataToSend, auth.token);
 
             if (response.success) {
-                console.log('Gyapan created successfully:', response.data);
+                // console.log('Gyapan created successfully:', response.data);
 
 
                 setFormData({

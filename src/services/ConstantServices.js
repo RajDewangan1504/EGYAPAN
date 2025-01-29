@@ -1,34 +1,60 @@
 import { SERVER_URL } from "../components/Utils"
 
-export const allPatwari = async(id, token) => {
+export const allPatwari = async (id, token) => {
     const res = await fetch(`${SERVER_URL}patwari/getlist/${id}`);
     const result = await res.json();
     return result;
 }
 
-export const getVillagesByHalka = async(id, token) => {
+export const getVillagesByHalka = async (id, token) => {
     const res = await fetch(`${SERVER_URL}village/getlist/${id}`);
     const result = await res.json();
     return result;
 }
 
-export const getVillageById = async(tehsilId , token)=>{
+export const getVillageById = async (tehsilId, token) => {
     const res = await fetch(`${SERVER_URL}village/getAll/${tehsilId}`);
     const result = await res.json();
     return result;
 }
 
-export const getGyapanTypes = async( token) => {
+export const getGyapanTypes = async (token) => {
     const res = await fetch(`${SERVER_URL}category/getlist`);
     const result = await res.json();
     return result;
 }
 
-export const getGyapans = async(id,token) => {
+export const getGyapans = async (id, token) => {
     const res = await fetch(`${SERVER_URL}gyapan/getall/${id}`);
     const result = await res.json();
     return result;
 }
+export const getGyapansByDate = async (id, token, fromDate, toDate) => {
+    try {
+        const response = await fetch(`${SERVER_URL}gyapan/getbyDate/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`, // Include token for authentication
+            },
+            body: JSON.stringify({
+                fromDate, // Ensure the date is in 'YYYY-MM-DD' format before passing
+                toDate,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Error fetching gyapans by date:', error);
+        return null;
+    }
+};
+
 
 export const createGyapan = async (data, token) => {
     try {
@@ -36,7 +62,7 @@ export const createGyapan = async (data, token) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` 
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data)
         });
@@ -59,7 +85,7 @@ export const addVillage = async (data, token) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` 
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data)
         });

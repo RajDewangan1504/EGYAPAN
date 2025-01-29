@@ -17,7 +17,7 @@ const GyapanStats = ({ onStatClick }) => {
         try {
             const res = await getGyapans(auth?.user?._id);
             setGyapans(res.data);
-            console.log(res);
+            // console.log(res);
         } catch (error) {
             console.error('Failed to load Gyapans:', error);
         }

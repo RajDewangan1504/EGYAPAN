@@ -51,7 +51,7 @@ export default function Login() {
       res => {
         setLoading(false);
         if (res.success) {
-          console.log(res);
+          // console.log(res);
           dispatch(SAVE_USER_DATA(res.data));
           navigate("/");
         }

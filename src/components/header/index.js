@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 // import axios from 'axios';
 import { useContext } from 'react';
 import { GyapanContext } from '../../context/GyapanContext';
+import { getGyapansByDate } from '../../services/ConstantServices'
 
 export default function Header() {
   const { setGyapans } = useContext(GyapanContext);
@@ -24,7 +25,7 @@ export default function Header() {
   const secondaryItems = ['All mail', 'Trash', 'Spam'];
   const auth = useSelector(state => state.authReducer.user);
   const [open, setOpen] = useState(false);
-  console.log("auth", auth);
+  // console.log("auth", auth);
   const [refresh, setRefresh] = useState(false);
 
   const [opendrawer, setOpendrawer] = React.useState(false);
@@ -70,23 +71,15 @@ export default function Header() {
       return;
     }
 
-    console.log("fromDate", fromDate.format('YYYY-MM-DD'));
-    console.log("toDate", toDate.format('YYYY-MM-DD'));
-
     try {
-      const response = await fetch(
-        'https://zgyapan-backend.vercel.app/api/v1/gyapan/getbyDate/66c6018191c7dcc3d43d67f4',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            fromDate: fromDate.format('YYYY-MM-DD'),
-            toDate: toDate.format('YYYY-MM-DD'),
-          }),
-        }
-      );
+      
+      const id = auth?.user?._id; // Example ID
+      const token = auth?.token; // Replace with actual token
+      const fromDate = fromDate.format('YYYY-MM-DD'); // Example: 7 days ago
+      const toDate = toDate.format('YYYY-MM-DD'); // Today
+
+      const response = await getGyapansByDate(id, token, fromDate, toDate);
+
 
 
 
@@ -97,7 +90,7 @@ export default function Header() {
       const data = await response.json();
       // setData(data); // Set the fetched data
 
-      console.log('Fetched Data:', data);
+      // console.log('Fetched Data:', data);
       if (data?.data) {
         setGyapans(data.data);  // Set data if it's not empty
       }
@@ -111,7 +104,7 @@ export default function Header() {
   // useEffect to trigger fetchDataByDate when both dates are selected
   useEffect(() => {
     fetchDataByDate();
-  }, [fromDate, toDate ,refresh]); // Trigger only when fromDate or toDate changes
+  }, [fromDate, toDate, refresh]); // Trigger only when fromDate or toDate changes
 
 
   return (
@@ -128,7 +121,7 @@ export default function Header() {
 
       <TemporaryDrawer setOpen={setOpendrawer} open={opendrawer} />
 
-          
+
       <div className='d-flex flex-row gap-2 align-items-center'>
         <div className={` gap-2 ${styles.datepicker} `}>
           <DatePickerValue value={fromDate} setValue={setFromDate} />
