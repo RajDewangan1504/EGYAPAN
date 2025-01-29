@@ -30,6 +30,10 @@ export const getGyapans = async (id, token) => {
     return result;
 }
 export const getGyapansByDate = async (id, token, fromDate, toDate) => {
+    console.log("id", id);
+    console.log("token", token);
+    console.log("formdate", fromDate);
+    console.log("todate", toDate);
     try {
         const response = await fetch(`${SERVER_URL}gyapan/getbyDate/${id}`, {
             method: 'POST',
@@ -42,16 +46,14 @@ export const getGyapansByDate = async (id, token, fromDate, toDate) => {
                 toDate,
             }),
         });
+        console.log("response", response);
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        return result;
+       
+        const data = await response.json();
+        return data;
+      
     } catch (error) {
-        console.error('Error fetching gyapans by date:', error);
-        return null;
+        console.error('Error fetching data:', error);
     }
 };
 

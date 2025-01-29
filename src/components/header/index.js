@@ -25,7 +25,7 @@ export default function Header() {
   const secondaryItems = ['All mail', 'Trash', 'Spam'];
   const auth = useSelector(state => state.authReducer.user);
   const [open, setOpen] = useState(false);
-  // console.log("auth", auth);
+  console.log("auth", auth);
   const [refresh, setRefresh] = useState(false);
 
   const [opendrawer, setOpendrawer] = React.useState(false);
@@ -71,28 +71,31 @@ export default function Header() {
       return;
     }
 
+    // console.log("fromDate", fromDate.format('YYYY-MM-DD'));
+    // console.log("toDate", toDate.format('YYYY-MM-DD'));
+
     try {
-      
+     
       const id = auth?.user?._id; // Example ID
       const token = auth?.token; // Replace with actual token
-      const fromDate = fromDate.format('YYYY-MM-DD'); // Example: 7 days ago
-      const toDate = toDate.format('YYYY-MM-DD'); // Today
+    
 
-      const response = await getGyapansByDate(id, token, fromDate, toDate);
-
-
+      const response = await getGyapansByDate(id, token, fromDate.format('YYYY-MM-DD'), toDate.format('YYYY-MM-DD'));
+      console.log("response new",response )
 
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
 
-      const data = await response.json();
-      // setData(data); // Set the fetched data
+
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! Status: ${response.statusCode}`);
+      // }
+
+      // const data = await response.json();
+      // setData(response.data); // Set the fetched data
 
       // console.log('Fetched Data:', data);
-      if (data?.data) {
-        setGyapans(data.data);  // Set data if it's not empty
+      if (response?.data) {
+        setGyapans(response.data);  // Set data if it's not empty
       }
     } catch (error) {
       console.error('Error fetching data:', error);
